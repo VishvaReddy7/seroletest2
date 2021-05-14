@@ -1,0 +1,39 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="text-center"> Please LogIn </h3>
+            <form [formGroup]="loginForm">
+                <div class="mb-3 btn-group-horizontal">
+                    <input type="radio" class="btn-check form-control m-3" name="role" id="teacher" autocomplete="off">
+                    <label class="btn btn-danger form-label m-3" for="teacher">Teacher</label>
+                    <input type="radio" class="btn-check form-control m-3" name="role" id="student" autocomplete="off">
+                    <label class="btn btn-danger form-label m-3" for="student">Student</label>
+                    <input type="radio" class="btn-check form-control m-3" name="role" id="admin" autocomplete="off">
+                    <label class="btn btn-danger form-label m-3" for="admin">Admin</label>
+                </div>
+               <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">User Name</label>
+                <input type="email" class="form-control" id="userName" aria-describedby="emailHelp" name="userName" formControlName="userName"  placeholder="abcdefg@gmail.com"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                <div id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('userName')">User Name (email) is Mandotory</div>
+              </div>
+               <div class="mb-3">
+                 <label for="exampleInputPassword1" class="form-label">Password</label>
+                 <input type="password" class="form-control" id="password"  name="password" formControlName="password">
+                 <small id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('password')">Password is Mandotory</small>
+               </div>
+               <div>
+                <small id="emailHelp" class="form-text text-danger" *ngIf="noData">Email ID and Password do not exist</small>
+                <small id="emailHelp" class="form-text text-danger" *ngIf="passwordIncorrect">Password Incorrect</small>
+                <small id="emailHelp" class="form-text text-danger" *ngIf="mailIDIncorrect">Incorrect Mail ID</small>
+               </div>   
+               <div>
+                <button type="submit" class="btn btn-primary mt-3" (click)="login()">Login</button>
+               </div>
+              
+
+             </form>
+             
+        </div>
+    </div>
+   
+</div>

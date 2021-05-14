@@ -1,0 +1,15 @@
+{
+    "teachers": [
+      { "id": 1, "title": "json-server", "author": "typicode" }
+    ],
+    "students": [
+      { "id": 1, "body": "some comment", "postId": 1 }
+    ],
+    "admin": { 
+               "id": "1",
+               "firstName": "Vishva Prakash Reddy",
+               "lastName": "Muddasani",
+               "userName": "VISHVA_MSD7",
+               "password": "Msdhoni7&" 
+             }
+}

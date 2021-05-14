@@ -1,0 +1,31 @@
+<div class="container mt-5">
+    <form [formGroup]="signUpForm">
+        <div class="row">
+            <div class="col sm-12">
+                <div class="mb-3 btn-group-horizontal">
+                    <input type="radio" class="btn-check form-control m-3" checked name="role" value="teacher" (click)="loadTeacher()" formControlName="role" id="teacher" autocomplete="off">
+                    <label class="btn btn-danger form-label m-3" for="teacher">Teacher</label>
+                    <input type="radio" class="btn-check form-control m-3" name="role" id="student" value="student" (click)="loadStudent()" formControlName="role" autocomplete="off">
+                    <label class="btn btn-danger form-label m-3" for="student">Student</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col sm-12">
+                <div  *ngIf="showTeacher">
+                    <app-teachersignup> </app-teachersignup>
+                </div>
+                
+                <div *ngIf="showStudent">
+                    <app-studentsignup> </app-studentsignup>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+</div>
+
+
+
+
+
