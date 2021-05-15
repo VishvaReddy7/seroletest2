@@ -109,5 +109,39 @@
       "email": "vishvaprakash03071997@gmail.com",
       "password": "Msdhoni7&"
     }
-  ]
+  ],
+  "subjects": [
+    { 
+      "id": "1",
+      "name": "DBMS"
+    },
+    {
+      "id": "2",
+      "name": "OOAD"
+    },
+    {
+      "id": "3",
+      "name": "OOAD"
+    },
+    {
+      "id": "4",
+      "name": "CN"
+    },
+    {
+      "id": "5",
+      "name": "Java"
+    },
+    {
+      "id": "6",
+      "name": "DA"
+    },
+    {
+      "id": "7",
+      "name": "AI"
+    },
+    {
+      "id": "8",
+      "name": "Web Technologies"
+    } 
+    ]
 }

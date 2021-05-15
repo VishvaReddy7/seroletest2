@@ -25,7 +25,7 @@ export class TeachersignupComponent implements OnInit {
 
   teacherSignUpForm!: FormGroup; 
   mailExists = false;
-  subjects: any= ['DBMS', 'OOAD', 'CN', 'Java', 'DA', 'AI', 'Web Technologies'];
+  subjects: any;
   teacherData: any;
   details: any;
 
@@ -38,6 +38,10 @@ export class TeachersignupComponent implements OnInit {
     this.createTeacherSignUpForm();
     this.restService.getTeacherData().subscribe((response) => {
       this.teacherData = response;
+    });
+
+    this.restService.getSubjectsData().subscribe((response) => {
+      this.subjects = response;
     });
   }
   

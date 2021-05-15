@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { MatTableModule } from '@angular/material/table';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +24,9 @@ import { TeachersignupComponent } from './teachersignup/teachersignup.component'
 import { StudentsignupComponent } from './studentsignup/studentsignup.component';
 import { SuccessfulpopdialogComponent } from './successfulpopdialog/successfulpopdialog.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { StudentsListComponent } from './students-list/students-list.component';
+import { TeachersListComponent } from './teachers-list/teachers-list.component';
+import { MatdashboardComponent } from './matdashboard/matdashboard.component';
 
 
 
@@ -36,7 +40,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     TeachersignupComponent,
     StudentsignupComponent,
     SuccessfulpopdialogComponent,
-    DashboardComponent
+    DashboardComponent,
+    StudentsListComponent,
+    TeachersListComponent,
+    MatdashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +59,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MatButtonModule,
     MatButtonToggleModule,
     MatFormFieldModule,
-    MatDialogModule   
+    MatDialogModule,
+    MatTableModule   
     
 
   ],

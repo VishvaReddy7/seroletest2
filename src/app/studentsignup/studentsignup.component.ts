@@ -22,7 +22,7 @@ export class StudentsignupComponent implements OnInit {
 
   studentSignUpForm!: FormGroup; 
   mailExists = false;
-  subjects: any= ['DBMS', 'OOAD', 'CN', 'Java', 'DA', 'AI', 'Web Technologies'];
+  subjects: any;
   studentData: any;
   details: any;
 
@@ -35,6 +35,10 @@ export class StudentsignupComponent implements OnInit {
     this.createStudentSignUpForm();
     this.restService.getStudentData().subscribe((response) => {
       this.studentData = response;
+    });
+
+    this.restService.getSubjectsData().subscribe((response) => {
+      this.subjects = response;
     });
   }
   

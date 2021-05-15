@@ -29,6 +29,10 @@ export class RestService {
     return this.httpClient.get(`${environment.apiUrl}admin`);
   }
 
+  getSubjectsData() {
+    return this.httpClient.get(`${environment.apiUrl}subjects`);
+  }
+
 
   signUp(data: any) {
     const options = {
