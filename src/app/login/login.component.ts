@@ -3,6 +3,9 @@ import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RestService } from '../rest.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SuccessfulpopdialogComponent } from '../successfulpopdialog/successfulpopdialog.component';
 
 @Component({
   selector: 'app-login',
@@ -16,15 +19,35 @@ export class LoginComponent implements OnInit {
   passwordIncorrect = false;
   noData = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) { }
+  teacherData: any = [];
+  studentData: any = [];
+  adminData: any = [];
+
+  constructor(private formBuilder: FormBuilder,
+     private router: Router,
+     private restService: RestService,
+     public  readonly dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.createLoginForm();
+
+    this.restService.getTeacherData().subscribe((response) => {
+      this.teacherData = response;
+    });
+
+    this.restService.getStudentData().subscribe((response) => {
+      this.studentData = response;
+    });
+
+    this.restService.getAdminData().subscribe((response) => {
+      this.adminData = response;
+    });
   }
 
   createLoginForm() {
     this.loginForm = this.formBuilder.group({
-      userName: ['', [Validators.required, Validators.email]],
+      role: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
   }
@@ -39,6 +62,92 @@ export class LoginComponent implements OnInit {
   }
   
   login(){
+
+    let details = {
+      role: this.loginForm.controls['role'].value,
+      email: this.loginForm.controls['email'].value.toLowerCase(),
+      password: this.loginForm.controls['password'].value
+    }
+
+     console.log(this.loginForm.controls.role.value);
+
+    if(this.loginForm.controls.role.value === 'teacher') {
+      if(this.teacherData.length==0){
+        this.noData = true;
+      }
+      else{
+        this.teacherData.forEach((element: any) => {
+          if(element.email === details.email){
+            if(element.password  === details.password){
+              const dialogRef = this.dialog.open(SuccessfulpopdialogComponent);
+              this.router.navigate([`/dashboard`]);
+            }
+            else{
+              this.passwordIncorrect = true;
+          
+            }
+            
+          }
+          else{
+            this.mailIDIncorrect = true;
+          }
+          
+        });
+      }
+    }
+
+    else if(this.loginForm.controls.role.value === 'student') {
+      if(this.studentData.length==0){
+        this.noData = true;
+      }
+      else{
+        this.studentData.forEach((element: any) => {
+          if(element.email === details.email){
+            if(element.password  === details.password){
+              const dialogRef = this.dialog.open(SuccessfulpopdialogComponent);
+              this.router.navigate([`/dashboard`]);
+            }
+            else{
+              this.passwordIncorrect = true;
+          
+            }
+            
+          }
+          else{
+            this.mailIDIncorrect = true;
+          }
+          
+        });
+      }
+    }
+  
+
+    else {
+      if(this.adminData.length==0){
+        this.noData = true;
+      }
+      else{
+        this.adminData.forEach((element: any) => {
+          if(element.email === details.email){
+            if(element.password  === details.password){
+              const dialogRef = this.dialog.open(SuccessfulpopdialogComponent);
+              this.router.navigate([`/dashboard`]);
+            }
+            else{
+              this.passwordIncorrect = true;
+          
+            }
+            
+          }
+          else{
+            this.mailIDIncorrect = true;
+          }
+          
+        });
+      }
+    }
+
   }
+
 
 }

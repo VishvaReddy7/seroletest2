@@ -75,6 +75,8 @@
             <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email"
               formControlName="email" placeholder="abcdefg@gmail.com"
               pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+            <div id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('userName')">Email is Mandotory</div>
+            <small id="emailHelp" class="form-text text-danger" *ngIf="mailExists">Email ID already exists</small>
           </div>
 
           <div class="mb-3">

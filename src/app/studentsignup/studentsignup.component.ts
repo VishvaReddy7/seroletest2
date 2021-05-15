@@ -8,6 +8,10 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RestService } from '../rest.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SuccessfulpopdialogComponent } from '../successfulpopdialog/successfulpopdialog.component';
+
 
 @Component({
   selector: 'app-studentsignup',
@@ -19,11 +23,19 @@ export class StudentsignupComponent implements OnInit {
   studentSignUpForm!: FormGroup; 
   mailExists = false;
   subjects: any= ['DBMS', 'OOAD', 'CN', 'Java', 'DA', 'AI', 'Web Technologies'];
+  studentData: any;
+  details: any;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private formBuilder: FormBuilder,
+     private router: Router,
+     private restService: RestService, 
+     public  readonly dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.createStudentSignUpForm();
+    this.restService.getStudentData().subscribe((response) => {
+      this.studentData = response;
+    });
   }
   
   createStudentSignUpForm() {
@@ -115,7 +127,48 @@ export class StudentsignupComponent implements OnInit {
     );
   }
 
-  studentSignUp(){}
+  studentSignUp(){
+    this.details = {
+      firstName: this.studentSignUpForm.controls['firstName'].value,
+      lastName: this.studentSignUpForm.controls['lastName'].value,
+      fatherName: this.studentSignUpForm.controls['fatherName'].value,
+      dateOfBirth: this.studentSignUpForm.controls['dateOfBirth'].value,
+      subjects: this.studentSignUpForm.controls['subjects'].value,
+      phoneNumber: this.studentSignUpForm.controls['phoneNumber'].value,
+      address: this.studentSignUpForm.controls['address'].value,
+      gender: this.studentSignUpForm.controls['gender'].value,
+      email: this.studentSignUpForm.controls['email'].value.toLowerCase(),
+      userName: this.studentSignUpForm.controls['userName'].value,
+      password: this.studentSignUpForm.controls['password'].value,
+      activitystatus: 'Active',
+      name:
+        this.studentSignUpForm.controls['firstName'].value +
+        ' ' +
+        this.studentSignUpForm.controls['lastName'].value,
+    };
+    console.log(this.details);
+
+    
+    if(this.studentData.find((o: { email: any; }) => o.email === this.details.email)) {
+      this.mailExists= true;
+    }
+    else{
+      const dialogRef = this.dialog.open(SuccessfulpopdialogComponent);
+      this.signUp();
+    }
+  }
+
+  signUp() {
+     console.log(this.studentSignUpForm.value);
+     this.restService.role = 'students';
+     this.studentSignUpForm.reset();
+     this.restService.signUp(this.details).subscribe((response) => {
+       console.log("response=>",response);
+     },
+     (error) => {
+
+     });
+  }
 
   fieldNameStatus(fieldName: string | number) {
     if (

@@ -1,15 +1,113 @@
 {
-    "teachers": [
-      { "id": 1, "title": "json-server", "author": "typicode" }
-    ],
-    "students": [
-      { "id": 1, "body": "some comment", "postId": 1 }
-    ],
-    "admin": { 
-               "id": "1",
-               "firstName": "Vishva Prakash Reddy",
-               "lastName": "Muddasani",
-               "userName": "VISHVA_MSD7",
-               "password": "Msdhoni7&" 
-             }
+  "teachers": [
+    {
+      "firstName": "Vishva Prakash Reddy",
+      "lastName": "Muddasani",
+      "fatherName": "Manohar Reddy Muddasani",
+      "dateOfBirth": "1997-07-02T14:00:00.000Z",
+      "subjects": [
+        "CN",
+        "Java"
+      ],
+      "experience": 2,
+      "phoneNumber": "0415640307",
+      "address": "5 CAVENDISH STREET",
+      "gender": "Male",
+      "email": "vishvaprakash03071997@gmail.com",
+      "userName": "VISHVAMSD7",
+      "password": "Msdhoni7&",
+      "activitystatus": "Active",
+      "name": "Vishva Prakash Reddy Muddasani",
+      "id": 1
+    },
+    {
+      "firstName": "Theju",
+      "lastName": "Muddasani",
+      "fatherName": "Venu Gopal Reddy Muddasani",
+      "dateOfBirth": "1994-11-30T13:00:00.000Z",
+      "subjects": [
+        "OOAD",
+        "DA"
+      ],
+      "experience": 1,
+      "phoneNumber": "0449889224",
+      "address": "53 Moree Avenue, Westmead, NSW , 2145",
+      "gender": "Female",
+      "email": "theju1@gmail.com",
+      "userName": "Theju07",
+      "password": "Theju07&",
+      "activitystatus": "Active",
+      "name": "Theju Muddasani",
+      "id": 2
+    }
+  ],
+  "students": [
+    {
+      "firstName": "Chandra Prakash Reddy",
+      "lastName": "Muddasani",
+      "fatherName": "Manohar Reddy Muddasani",
+      "dateOfBirth": "1994-05-07T14:00:00.000Z",
+      "subjects": [
+        "CN",
+        "Java"
+      ],
+      "phoneNumber": "08978277257",
+      "address": "5 CAVENDISH STREET",
+      "gender": "Male",
+      "email": "20158223@students.latrobe.edu.au",
+      "userName": "Chandu07",
+      "password": "Msdhoni7&",
+      "activitystatus": "Active",
+      "name": "Chandra Prakash Reddy Muddasani",
+      "id": 1
+    },
+    {
+      "firstName": "Jeevan Sagar",
+      "lastName": "Batana",
+      "fatherName": "Sukhibava",
+      "dateOfBirth": "1996-03-29T13:00:00.000Z",
+      "subjects": [
+        "DBMS",
+        "DA"
+      ],
+      "phoneNumber": "9502522888",
+      "address": "Seethammadara",
+      "gender": "Male",
+      "email": "jsn.batana@gmail.com",
+      "userName": "JeevanB",
+      "password": "Jeevan07&",
+      "activitystatus": "Active",
+      "name": "Jeevan Sagar Batana",
+      "id": 2
+    },
+    {
+      "firstName": "Sai Tarun Reddy",
+      "lastName": "Muddasani",
+      "fatherName": "Venu Gopal Reddy Muddasani",
+      "dateOfBirth": "1999-07-08T14:00:00.000Z",
+      "subjects": [
+        "DBMS",
+        "OOAD"
+      ],
+      "phoneNumber": "0412381210",
+      "address": "53 Moree Avenue, Westmead, NSW, 2145",
+      "gender": "Male",
+      "email": "saitarun9@gmail.com",
+      "userName": "SaiTarun7",
+      "password": "Tarun07&",
+      "activitystatus": "Active",
+      "name": "Sai Tarun Reddy Muddasani",
+      "id": 3
+    }
+  ],
+  "admin": [
+    {
+      "id": "1",
+      "firstName": "Vishva Prakash Reddy",
+      "lastName": "Muddasani",
+      "userName": "VISHVA_MSD7",
+      "email": "vishvaprakash03071997@gmail.com",
+      "password": "Msdhoni7&"
+    }
+  ]
 }

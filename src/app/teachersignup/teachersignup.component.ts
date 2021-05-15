@@ -9,6 +9,9 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RestService } from '../rest.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SuccessfulpopdialogComponent } from '../successfulpopdialog/successfulpopdialog.component';
+
 
 
 
@@ -23,11 +26,19 @@ export class TeachersignupComponent implements OnInit {
   teacherSignUpForm!: FormGroup; 
   mailExists = false;
   subjects: any= ['DBMS', 'OOAD', 'CN', 'Java', 'DA', 'AI', 'Web Technologies'];
+  teacherData: any;
+  details: any;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private restService: RestService) { }
+  constructor(private formBuilder: FormBuilder,
+     private router: Router,
+     private restService: RestService,
+     public  readonly dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.createTeacherSignUpForm();
+    this.restService.getTeacherData().subscribe((response) => {
+      this.teacherData = response;
+    });
   }
   
   createTeacherSignUpForm() {
@@ -120,7 +131,7 @@ export class TeachersignupComponent implements OnInit {
   }
 
   teacherSignUp() {
-    let details = {
+    this.details = {
       firstName: this.teacherSignUpForm.controls['firstName'].value,
       lastName: this.teacherSignUpForm.controls['lastName'].value,
       fatherName: this.teacherSignUpForm.controls['fatherName'].value,
@@ -130,7 +141,7 @@ export class TeachersignupComponent implements OnInit {
       phoneNumber: this.teacherSignUpForm.controls['phoneNumber'].value,
       address: this.teacherSignUpForm.controls['address'].value,
       gender: this.teacherSignUpForm.controls['gender'].value,
-      email: this.teacherSignUpForm.controls['email'].value,
+      email: this.teacherSignUpForm.controls['email'].value.toLowerCase(),
       userName: this.teacherSignUpForm.controls['userName'].value,
       password: this.teacherSignUpForm.controls['password'].value,
       activitystatus: 'Active',
@@ -139,9 +150,28 @@ export class TeachersignupComponent implements OnInit {
         ' ' +
         this.teacherSignUpForm.controls['lastName'].value,
     };
-    console.log(details);
-    this.restService.teacherData = details;
-     
+    console.log(this.details);
+
+    
+    if(this.teacherData.find((o: { email: any; }) => o.email === this.details.email)) {
+      this.mailExists= true;
+    }
+    else{
+      const dialogRef = this.dialog.open(SuccessfulpopdialogComponent);
+      this.signUp();
+    }
+  }
+
+  signUp() {
+    console.log(this.teacherSignUpForm.value);
+    this.restService.role = 'teachers';
+    this.teacherSignUpForm.reset();
+    this.restService.signUp(this.details).subscribe((response) => {
+      console.log("response=>", response);
+    },
+    (error) => {
+
+    });
   }
 
 

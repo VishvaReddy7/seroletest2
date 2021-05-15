@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -20,6 +21,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
 import { TeachersignupComponent } from './teachersignup/teachersignup.component';
 import { StudentsignupComponent } from './studentsignup/studentsignup.component';
+import { SuccessfulpopdialogComponent } from './successfulpopdialog/successfulpopdialog.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 
 
@@ -30,7 +34,9 @@ import { StudentsignupComponent } from './studentsignup/studentsignup.component'
     NavbarComponent,
     LoginComponent,
     TeachersignupComponent,
-    StudentsignupComponent
+    StudentsignupComponent,
+    SuccessfulpopdialogComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +51,8 @@ import { StudentsignupComponent } from './studentsignup/studentsignup.component'
     BrowserAnimationsModule,
     MatButtonModule,
     MatButtonToggleModule,
-    MatFormFieldModule   
+    MatFormFieldModule,
+    MatDialogModule   
     
 
   ],
