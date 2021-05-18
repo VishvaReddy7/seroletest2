@@ -10,7 +10,7 @@
         "Java"
       ],
       "experience": 2,
-      "phoneNumber": "0415640307",
+      "phoneNumber": "0415641507",
       "address": "5 CAVENDISH STREET",
       "gender": "Male",
       "email": "vishvaprakash03071997@gmail.com",
@@ -30,7 +30,7 @@
         "DA"
       ],
       "experience": 1,
-      "phoneNumber": "0449889224",
+      "phoneNumber": "0438889224",
       "address": "53 Moree Avenue, Westmead, NSW , 2145",
       "gender": "Female",
       "email": "theju1@gmail.com",
@@ -51,7 +51,7 @@
         "CN",
         "Java"
       ],
-      "phoneNumber": "08978277257",
+      "phoneNumber": "8958266256",
       "address": "5 CAVENDISH STREET",
       "gender": "Male",
       "email": "20158223@students.latrobe.edu.au",
@@ -70,7 +70,7 @@
         "DBMS",
         "DA"
       ],
-      "phoneNumber": "9502522888",
+      "phoneNumber": "9502511788",
       "address": "Seethammadara",
       "gender": "Male",
       "email": "jsn.batana@gmail.com",
@@ -89,7 +89,7 @@
         "DBMS",
         "OOAD"
       ],
-      "phoneNumber": "0412381210",
+      "phoneNumber": "0412340210",
       "address": "53 Moree Avenue, Westmead, NSW, 2145",
       "gender": "Male",
       "email": "saitarun9@gmail.com",
@@ -102,12 +102,20 @@
   ],
   "admin": [
     {
-      "id": "1",
+      
       "firstName": "Vishva Prakash Reddy",
       "lastName": "Muddasani",
-      "userName": "VISHVA_MSD7",
+      "fatherName": "Manohar Reddy Muddasani",
+      "dateOfBirth": "1997-07-02T14:00:00.000Z",
+      "phoneNumber": "0415641507",
+      "address": "5 CAVENDISH STREET",
+      "gender": "Male",
       "email": "vishvaprakash03071997@gmail.com",
-      "password": "Msdhoni7&"
+      "userName": "VISHVAMSD7",
+      "password": "Msdhoni7&",
+      "activitystatus": "Active",
+      "name": "Vishva Prakash Reddy Muddasani",
+      "id": 1
     }
   ],
   "subjects": [
@@ -121,26 +129,22 @@
     },
     {
       "id": "3",
-      "name": "OOAD"
-    },
-    {
-      "id": "4",
       "name": "CN"
     },
     {
-      "id": "5",
+      "id": "4",
       "name": "Java"
     },
     {
-      "id": "6",
+      "id": "5",
       "name": "DA"
     },
     {
-      "id": "7",
+      "id": "6",
       "name": "AI"
     },
     {
-      "id": "8",
+      "id": "7",
       "name": "Web Technologies"
     } 
     ]

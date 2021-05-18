@@ -1,20 +1,32 @@
-<div class="container-float">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-sm-12 container-float">
+        <div class="col-sm-12 container">
             <p style="text-align: center; background-color: burlywood;">My Dashboard</p>
         </div>
     </div>
-    <div class="row container-float">
-        <div class="col-sm-2 container-float d-flex flex-column bd-highlight mb-3" style="background-color: #0058b5;">
-            <div class="d-inline-flex p-2 bd-highlight btn btn-primary ">Students</div>
+    <div class="row container">
+        <div class="col-sm-2 container d-flex flex-column bd-highlight mb-3" style="background-color: #0058b5; height: 500px;">
+            <div class="d-inline-flex p-2 bd-highlight btn btn-primary mt-2" (click)="showStudentList()">Students</div>
             <br>
-            <div class="d-inline-flex p-2 bd-highlight btn btn-primary">Teachers</div>
+            <div class="d-inline-flex p-2 bd-highlight btn btn-primary" (click)="showTeacherList()">Teachers</div>
             <br>
-            <div class="d-inline-flex p-2 bd-highlight btn btn-primary">My Profile</div>
+            <div class="d-inline-flex p-2 bd-highlight btn btn-primary" (click)="showMyProfileData()">My Profile</div>
             <br>
-            <div class="d-inline-flex p-2 bd-highlight btn btn-primary">Subjects</div>
+            <div class="d-inline-flex p-2 bd-highlight btn btn-primary" (click)="showSubjectsData()">Subjects</div>
         </div>
-        <div class="col-sm-10 container-float">
+        <div class="col-sm-10 container">
+            <span *ngIf="showStudents">
+                <app-students-list> </app-students-list>
+            </span>
+            <span *ngIf="showTeachers">
+                <app-teachers-list> </app-teachers-list>
+            </span>
+            <span *ngIf="showMyProfile">
+                <app-my-profile> </app-my-profile>
+            </span>
+            <span *ngIf="showSubjects">
+                <app-subjects> </app-subjects>
+            </span>
 
         </div>
     </div>

@@ -1,4 +1,5 @@
 <div class="example-container mat-elevation-z8">
+    <button type="button" class="btn btn-success mr-3" >Add Student</button>
     <table mat-table [dataSource]="studentData">
       
         <ng-container matColumnDef="firstName" sticky>
@@ -35,7 +36,7 @@
             <mat-header-cell  *matHeaderCellDef > Actions </mat-header-cell>
             <mat-cell *matCellDef="let element" >
                
-                    <button type="button" class="btn btn-info mr-3" >Edit</button>
+                    <button type="button" class="btn btn-info mr-3" (click)="editForm(element.userName)">Edit</button>
                
                 
                     <button  type="button" class="btn btn-danger mr-3">Delete</button>
@@ -51,6 +52,6 @@
     </table>
 </div>
 
-<!-- (click)="editForm(element.userName)"
- (click)="deleteForm(element.userName)" -->
+
+ <!-- (click)="deleteForm(element.userName)" -->
 

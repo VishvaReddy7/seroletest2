@@ -1,0 +1,16 @@
+<table id="myProfile">
+    <tr> 
+        <td style="background-color: #0058b5; color: cornsilk; text-align: center;">
+            <h3> My Profile </h3> 
+        </td>
+        <td>
+            <button class="d-inline-flex p-2 bd-highlight btn btn-info">Edit</button>
+        </td>  
+    </tr>
+    <tr *ngFor="let key of arrayOfKeys">
+        <th>{{key}}</th>
+        <td *ngFor="let data of myProfileData">
+            {{data[key]}}
+        </td>
+    </tr>
+</table>

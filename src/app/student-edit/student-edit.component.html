@@ -2,7 +2,7 @@
     <div class="row">
       <div class="col-sm-12">
         <h3 class="text-center">Student Sign Up Form</h3>
-        <form [formGroup]="studentSignUpForm">
+        <form [formGroup]="studentEditForm">
           <div class="mb-3">
             <label for="firstName" class="form-label">First Name</label>
             <input type="text" class="form-control" aria-describedby="emailHelp" id="firstName" name="firstName"
@@ -85,22 +85,22 @@
             <small id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('password')">Password is
               Mandotory</small>
             <small id="emailHelp" class="form-text text-danger"
-              *ngIf="studentSignUpForm.controls.password.touched && studentSignUpForm.controls.password.errors?.hasNumber">Must Contain
+              *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasNumber">Must Contain
               atleast 1 Number</small>
             <small id="emailHelp" class="form-text text-danger"
-              *ngIf="studentSignUpForm.controls.password.touched && studentSignUpForm.controls.password.errors?.hasCapitalCase">Must
+              *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasCapitalCase">Must
               Contain atleast 1 Capital letter</small>
             <small id="emailHelp" class="form-text text-danger"
-              *ngIf="studentSignUpForm.controls.password.touched && studentSignUpForm.controls.password.errors?.hasSmallCase">Must
+              *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasSmallCase">Must
               Contain atleast 1 small letter</small>
             <small id="emailHelp" class="form-text text-danger"
-              *ngIf="studentSignUpForm.controls.password.touched && studentSignUpForm.controls.password.errors?.hasSpecialCharacters">Must
+              *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasSpecialCharacters">Must
               Contain atleast 1 Special character</small>
             <small id="emailHelp" class="form-text text-danger"
-              *ngIf="studentSignUpForm.controls.password.touched && studentSignUpForm.controls.password.errors?.minLength">Must Contain
+              *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.minLength">Must Contain
               atleast 8 characters</small>
             <small id="emailHelp" class="form-text text-danger"
-              *ngIf="studentSignUpForm.controls.password.touched && studentSignUpForm.controls.password.errors?.maxLength">Must Contain
+              *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.maxLength">Must Contain
               atmost 20 characters</small>
           </div>
 
@@ -110,14 +110,14 @@
               formControlName="confirmPassword">
             <small id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('confirmPassword')">Confirm
               Password is Mandotory</small>
-            <span class="form-text text-danger" *ngIf="studentSignUpForm.controls.confirmPassword.errors?.Mismatch">Password and
+            <span class="form-text text-danger" *ngIf="studentEditForm.controls.confirmPassword.errors?.Mismatch">Password and
               Confirm Password do not match</span>
           </div>
   
           
   
           <div>
-            <button type="submit" class="btn btn-primary m-4" (click)="studentSignUp()" [disabled]="!studentSignUpForm.valid">Sign Up</button>
+            <button type="submit" class="btn btn-primary m-4" >Sign Up</button>
           </div>
   
   
@@ -127,4 +127,6 @@
     </div>
   
   </div>
+  <!-- (click)="studentSignUp()" -->
+
 

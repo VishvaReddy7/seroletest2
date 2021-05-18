@@ -7,46 +7,64 @@ import {
   AbstractControl,
   ValidatorFn,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 import { RestService } from '../rest.service';
+import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { SuccessfulpopdialogComponent } from '../successfulpopdialog/successfulpopdialog.component';
-
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
-  selector: 'app-studentsignup',
-  templateUrl: './studentsignup.component.html',
-  styleUrls: ['./studentsignup.component.css']
+  selector: 'app-student-edit',
+  templateUrl: './student-edit.component.html',
+  styleUrls: ['./student-edit.component.css']
 })
-export class StudentsignupComponent implements OnInit {
+export class StudentEditComponent implements OnInit {
 
-  studentSignUpForm!: FormGroup; 
+  studentEditForm! : FormGroup;
   mailExists = false;
-  subjects: any;
+  userDetails: any;
   studentData: any;
-  details: any;
+  subjects: any;
 
-  constructor(private formBuilder: FormBuilder,
-     private router: Router,
-     private restService: RestService, 
-     public  readonly dialog: MatDialog) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private restService: RestService,
+    private router: Router,
+    public readonly dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
-    this.createStudentSignUpForm();
+    
+    this.createStudentEditForm();
+  }
+
+  createStudentEditForm() {
+    
+
     this.restService.getStudentData().subscribe((response) => {
       this.studentData = response;
-    });
+      console.log("Studnet Data=>", this.studentData);
+      console.log("user Exist in rest service =>", this.restService.userExist);
+
+      this.userDetails = this.studentData.find(
+      (o: { userName: any }) => o.userName === this.restService.userExist
+    );
+    console.log("user Details=>", this.userDetails);
+
+
+    
+
+    
 
     this.restService.getSubjectsData().subscribe((response) => {
       this.subjects = response;
-    });
-  }
-  
-  createStudentSignUpForm() {
-    this.studentSignUpForm = this.formBuilder.group(
+    
+    
+    
+    console.log(this.userDetails);
+    this.studentEditForm = this.formBuilder.group(
       {
         firstName: [
-          '',
+          this.userDetails?.firstName,
           [
             Validators.required,
             Validators.maxLength(50),
@@ -54,7 +72,7 @@ export class StudentsignupComponent implements OnInit {
           ],
         ],
         lastName: [
-          '',
+          this.userDetails?.lastName,
           [
             Validators.required,
             Validators.maxLength(50),
@@ -62,7 +80,7 @@ export class StudentsignupComponent implements OnInit {
           ],
         ],
         fatherName: [
-          '',
+          this.userDetails?.fatherName,
           [
             Validators.required,
             Validators.maxLength(50),
@@ -70,30 +88,30 @@ export class StudentsignupComponent implements OnInit {
           ],
         ],
         dateOfBirth: [
-          '',
+          this.userDetails?.dateOfBirth,
           [
             Validators.required
           ],
         ],
         subjects: [
-          '',
+          this.userDetails?.subjects,
           [
             Validators.required
           ],
         ],
         phoneNumber: [
-          '',
+          this.userDetails?.phoneNumber,
           [
             Validators.required,
             Validators.maxLength(10),
             Validators.pattern('^[0-9]{10}$'),
           ],
         ],
-        address: ['', Validators.required],
-        gender: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
+        address: [this.userDetails.address, Validators.required],
+        gender: [this.userDetails.gender, Validators.required],
+        email: [this.userDetails.email, [Validators.required, Validators.email]],
         userName: [
-          '',
+          this.userDetails.userName,
           [
             Validators.required,
             Validators.maxLength(50),
@@ -102,7 +120,7 @@ export class StudentsignupComponent implements OnInit {
         ],
         
         password: [
-          '',
+          this.userDetails.password,
           Validators.compose([
             Validators.required,
             this.patternValidator(/\d/, { hasNumber: true }),
@@ -116,61 +134,21 @@ export class StudentsignupComponent implements OnInit {
           ]),
         ],
 
-        confirmPassword: [null, [Validators.required]], 
+        confirmPassword: [this.userDetails.password, [Validators.required]], 
       },
       {
         validator: this.ConfirmPasswordValidator('password', 'confirmPassword'),
       }
     );
-  }
-
-  studentSignUp(){
-    this.details = {
-      firstName: this.studentSignUpForm.controls['firstName'].value,
-      lastName: this.studentSignUpForm.controls['lastName'].value,
-      fatherName: this.studentSignUpForm.controls['fatherName'].value,
-      dateOfBirth: this.studentSignUpForm.controls['dateOfBirth'].value,
-      subjects: this.studentSignUpForm.controls['subjects'].value,
-      phoneNumber: this.studentSignUpForm.controls['phoneNumber'].value,
-      address: this.studentSignUpForm.controls['address'].value,
-      gender: this.studentSignUpForm.controls['gender'].value,
-      email: this.studentSignUpForm.controls['email'].value.toLowerCase(),
-      userName: this.studentSignUpForm.controls['userName'].value,
-      password: this.studentSignUpForm.controls['password'].value,
-      activitystatus: 'Active',
-      name:
-        this.studentSignUpForm.controls['firstName'].value +
-        ' ' +
-        this.studentSignUpForm.controls['lastName'].value,
-    };
-    console.log(this.details);
-
+  });
+  });
     
-    if(this.studentData.find((o: { email: any; }) => o.email === this.details.email)) {
-      this.mailExists= true;
-    }
-    else{
-      const dialogRef = this.dialog.open(SuccessfulpopdialogComponent);
-      this.signUp();
-    }
-  }
-
-  signUp() {
-     console.log(this.studentSignUpForm.value);
-     this.restService.role = 'students';
-     this.studentSignUpForm.reset();
-     this.restService.signUp(this.details).subscribe((response) => {
-       console.log("response=>",response);
-     },
-     (error) => {
-
-     });
   }
 
   fieldNameStatus(fieldName: string | number) {
     if (
-      this.studentSignUpForm.controls[fieldName].touched &&
-      this.studentSignUpForm.controls[fieldName].errors?.required
+      this.studentEditForm.controls[fieldName].touched &&
+      this.studentEditForm.controls[fieldName].errors?.required
     ) {
       return true;
     } else {
@@ -206,4 +184,5 @@ export class StudentsignupComponent implements OnInit {
       }
     };
   }
+
 }

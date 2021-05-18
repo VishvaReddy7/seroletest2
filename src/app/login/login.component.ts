@@ -69,6 +69,9 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.controls['password'].value
     }
 
+    this.restService.loggedInPersonEmail = details.email;
+    this.restService.loggedInPersonRole = details.role;
+
      console.log(this.loginForm.controls.role.value);
 
     if(this.loginForm.controls.role.value === 'teacher') {
@@ -146,8 +149,9 @@ export class LoginComponent implements OnInit {
         });
       }
     }
-
   }
+
+  
 
 
 }

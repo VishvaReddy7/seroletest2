@@ -26,7 +26,11 @@ import { SuccessfulpopdialogComponent } from './successfulpopdialog/successfulpo
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { StudentsListComponent } from './students-list/students-list.component';
 import { TeachersListComponent } from './teachers-list/teachers-list.component';
-import { MatdashboardComponent } from './matdashboard/matdashboard.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
+import { SubjectsComponent } from './subjects/subjects.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { EditPopupComponent } from './edit-popup/edit-popup.component';
+import { StudentEditComponent } from './student-edit/student-edit.component';
 
 
 
@@ -43,7 +47,11 @@ import { MatdashboardComponent } from './matdashboard/matdashboard.component';
     DashboardComponent,
     StudentsListComponent,
     TeachersListComponent,
-    MatdashboardComponent
+    MyProfileComponent,
+    SubjectsComponent,
+    ConfirmationDialogComponent,
+    EditPopupComponent,
+    StudentEditComponent
   ],
   imports: [
     BrowserModule,
