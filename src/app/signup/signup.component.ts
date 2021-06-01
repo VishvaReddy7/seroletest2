@@ -17,7 +17,7 @@ export class SignupComponent implements OnInit {
     this.createSingUpForm();
   }
   
-  createSingUpForm() {
+  createSingUpForm() : void {
     this.signUpForm = this.formBuilder.group(
       {
         role: [
@@ -33,17 +33,17 @@ export class SignupComponent implements OnInit {
   showTeacher : boolean = true;
   showStudent : boolean = false;
 
-  loadTeacher() {
+  loadTeacher() : void {
     this.showTeacher = true;
     this.showStudent = false;
   }
 
-  loadStudent() {
+  loadStudent() : void {
     this.showTeacher = false;
     this.showStudent = true;
   }
 
-  loadAdmin() {
+  loadAdmin() : void {
     this.showTeacher = false;
     this.showStudent = false;
   }

@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
 import { RestService } from '../rest.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SuccessfulpopdialogComponent } from '../successfulpopdialog/successfulpopdialog.component';
+import { first } from 'rxjs/operators';
+import { Subjects } from '../interfaces/subjectsInterface';
+import { Teachers } from '../interfaces/teachersInterface';
 
 
 
@@ -24,10 +27,11 @@ import { SuccessfulpopdialogComponent } from '../successfulpopdialog/successfulp
 export class TeachersignupComponent implements OnInit {
 
   teacherSignUpForm!: FormGroup; 
-  mailExists = false;
-  subjects: any;
-  teacherData: any;
-  details: any;
+  mailExists:boolean = false;
+  subjectsData: Array<Subjects> | undefined;
+  teacherData: Array<Teachers> = [];
+  details: Teachers | undefined;
+  userNameExists:boolean = false;
 
   constructor(private formBuilder: FormBuilder,
      private router: Router,
@@ -36,16 +40,12 @@ export class TeachersignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.createTeacherSignUpForm();
-    this.restService.getTeacherData().subscribe((response) => {
-      this.teacherData = response;
-    });
-
-    this.restService.getSubjectsData().subscribe((response) => {
-      this.subjects = response;
-    });
+    this.getTeachersData();
+    this.getSubjectsData();
+    
   }
   
-  createTeacherSignUpForm() {
+  createTeacherSignUpForm() : void {
     this.teacherSignUpForm = this.formBuilder.group(
       {
         firstName: [
@@ -134,7 +134,7 @@ export class TeachersignupComponent implements OnInit {
     );
   }
 
-  teacherSignUp() {
+  teacherSignUp() : void {
     this.details = {
       firstName: this.teacherSignUpForm.controls['firstName'].value,
       lastName: this.teacherSignUpForm.controls['lastName'].value,
@@ -157,20 +157,27 @@ export class TeachersignupComponent implements OnInit {
     console.log(this.details);
 
     
-    if(this.teacherData.find((o: { email: any; }) => o.email === this.details.email)) {
+    if(this.teacherData.find((o: { email: string; }) => o.email === this.details?.email)) {
       this.mailExists= true;
     }
     else{
-      const dialogRef = this.dialog.open(SuccessfulpopdialogComponent);
-      this.signUp();
+      if(this.teacherData.find((o: { userName: string;}) => o.userName === this.details?.userName)) {
+        this.userNameExists = true;
+      }
+      else{
+        const dialogRef = this.dialog.open(SuccessfulpopdialogComponent);
+        this.signUp(this.details);
+      }
+      
     }
+
   }
 
-  signUp() {
+  signUp(details: Teachers) : void {
     console.log(this.teacherSignUpForm.value);
     this.restService.role = 'teachers';
     this.teacherSignUpForm.reset();
-    this.restService.signUp(this.details).subscribe((response) => {
+    this.restService.signUp(details).subscribe((response) => {
       console.log("response=>", response);
     },
     (error) => {
@@ -217,6 +224,22 @@ export class TeachersignupComponent implements OnInit {
         }
       }
     };
+  }
+
+  getTeachersData() : void {
+    this.restService.getTeacherData().pipe(
+      first()
+    ).subscribe((response :Teachers[]) => {
+      this.teacherData = response;
+    });
+  }
+
+  getSubjectsData() : void {
+    this.restService.getSubjectsData().pipe(
+      first()
+    ).subscribe((response: Subjects[]) => {
+      this.subjectsData = response;
+    });
   }
 
 }

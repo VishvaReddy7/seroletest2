@@ -11,6 +11,10 @@ import { Router } from '@angular/router';
 import { RestService } from '../rest.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SuccessfulpopdialogComponent } from '../successfulpopdialog/successfulpopdialog.component';
+import { Subjects } from '../interfaces/subjectsInterface';
+import { Students } from '../interfaces/studentsInterface';
+import { first } from 'rxjs/operators';
+
 
 
 @Component({
@@ -21,10 +25,14 @@ import { SuccessfulpopdialogComponent } from '../successfulpopdialog/successfulp
 export class StudentsignupComponent implements OnInit {
 
   studentSignUpForm!: FormGroup; 
-  mailExists = false;
-  subjects: any;
-  studentData: any;
-  details: any;
+  mailExists: boolean = false;
+  userNameExists: boolean = false;
+  subjectsData: Array<Subjects> = [];
+  studentData: Array<Students> = [];
+  details: Students | undefined;
+  // activeSubjects: any;
+
+  
 
   constructor(private formBuilder: FormBuilder,
      private router: Router,
@@ -33,17 +41,14 @@ export class StudentsignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.createStudentSignUpForm();
-    this.restService.getStudentData().subscribe((response) => {
-      this.studentData = response;
-    });
-
-    this.restService.getSubjectsData().subscribe((response) => {
-      this.subjects = response;
-    });
+    this.getStudentsData();
+    this.getSubjectsData();
+    // this.getActiveSubjects();
+    
   }
   
-  createStudentSignUpForm() {
-    this.studentSignUpForm = this.formBuilder.group(
+  createStudentSignUpForm() : FormGroup {
+    return this.studentSignUpForm = this.formBuilder.group(
       {
         firstName: [
           '',
@@ -66,7 +71,7 @@ export class StudentsignupComponent implements OnInit {
           [
             Validators.required,
             Validators.maxLength(50),
-            Validators.pattern('[a-zA-Z0-9]*'),
+            Validators.pattern('^[0-9a-zA-Z \b]+$'),
           ],
         ],
         dateOfBirth: [
@@ -124,7 +129,7 @@ export class StudentsignupComponent implements OnInit {
     );
   }
 
-  studentSignUp(){
+  studentSignUp() : void {
     this.details = {
       firstName: this.studentSignUpForm.controls['firstName'].value,
       lastName: this.studentSignUpForm.controls['lastName'].value,
@@ -143,23 +148,30 @@ export class StudentsignupComponent implements OnInit {
         ' ' +
         this.studentSignUpForm.controls['lastName'].value,
     };
-    console.log(this.details);
+
 
     
-    if(this.studentData.find((o: { email: any; }) => o.email === this.details.email)) {
+    if(this.studentData.find((o: { email: string; }) => o.email === this.details?.email)) {
       this.mailExists= true;
     }
     else{
-      const dialogRef = this.dialog.open(SuccessfulpopdialogComponent);
-      this.signUp();
+      if(this.studentData.find((o: { userName: string;}) => o.userName === this.details?.userName)) {
+        this.userNameExists = true;
+      }
+      else{
+        const dialogRef = this.dialog.open(SuccessfulpopdialogComponent);
+        this.signUp(this.details);
+      }
+      
     }
   }
 
-  signUp() {
-     console.log(this.studentSignUpForm.value);
+  signUp(details: Students) : void {
      this.restService.role = 'students';
-     this.studentSignUpForm.reset();
-     this.restService.signUp(this.details).subscribe((response) => {
+     console.log(this.studentSignUpForm, "<=before reset");
+     this.createStudentSignUpForm();
+     console.log(this.studentSignUpForm, "=<after reset");
+     this.restService.signUp(details).subscribe((response) => {
        console.log("response=>",response);
      },
      (error) => {
@@ -206,4 +218,33 @@ export class StudentsignupComponent implements OnInit {
       }
     };
   }
+
+  getStudentsData() : void {
+    this.restService.getStudentData().pipe(
+      first()
+    ).subscribe((response: Students[]) => {
+      this.studentData = response;
+    });
+  }
+
+  getSubjectsData() : void {
+    this.restService.getSubjectsData().pipe(
+      first()
+    ).subscribe((response: Subjects[]) => {
+      this.subjectsData = response
+      console.log(response);
+      console.log("subjects",this.subjectsData);
+    });
+  }
+  
+  // getActiveSubjects() {
+  //   console.log(this.subjectsData);
+  //   this.subjectsData.forEach((element: any) => {
+  //     if(element.activitystatus = "Active") {
+  //       this.activeSubjects.push(element);
+  //     }
+  //     else {}
+  //   });
+  // }
+  
 }

@@ -1,132 +1,132 @@
-<div class="container mt-5">
-    <div class="row">
-      <div class="col-sm-12">
-        <h3 class="text-center">Student Sign Up Form</h3>
-        <form [formGroup]="studentEditForm">
-          <div class="mb-3">
-            <label for="firstName" class="form-label">First Name</label>
-            <input type="text" class="form-control" aria-describedby="emailHelp" id="firstName" name="firstName"
-              formControlName="firstName" placeholder="Wick">
-          </div>
-
-          <div class="mb-3">
-            <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" aria-describedby="emailHelp" id="lastName" name="lastName"
-              formControlName="lastName" placeholder="John">
-          </div>
-
-          <div class="mb-3">
-            <label for="fatherName" class="form-label">Father Name</label>
-            <input type="text" class="form-control" aria-describedby="emailHelp" id="fatherName" name="fatherName"
-              formControlName="fatherName" placeholder="John">
-          </div>
-
-          <div class="mb-3">
-            <mat-form-field appearance="fill">
-                <mat-label>Choose a date</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
-          </div>
-
-          <div class="mb-3">
-            <mat-form-field appearance="fill">
-                <mat-label>Subjects</mat-label>
-                <mat-select formControlName="subjects" multiple>
-                  <mat-option *ngFor="let subject of subjects" [value]="subject">{{subject.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-          </div>
-
-          <div class="mb-3">
-            <label for="phoneNumber" class="form-label">Phone Number</label>
-            <input type="text" class="form-control" aria-describedby="emailHelp" id="phoneNumber" name="phoneNumber"
-              formControlName="phoneNumber" placeholder="Phone Number">
-          </div>
-
-          <div class="form-floating">
-            <label for="floatingTextarea2">Address</label>
-            <textarea class="form-control" maxlength="200" placeholder="Leave Address here" id="address" name="address"
-              formControlName="address" style="height: 100px"></textarea>
-            <small id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('address')">Address is
-              Mandotory</small>
-          </div>
-
-          <div class="mb-3 form-check">
-            <label  class="m-3">
-                <input type="radio" value="Male" formControlName="gender">
-                  <span>Male</span>
-            </label>
-            <label class="m-3">
-                <input type="radio" value="Female" formControlName="gender">
-                  <span>Female</span>
-            </label>
-          </div>
-
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email"
-              formControlName="email" placeholder="abcdefg@gmail.com"
-              pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
-              <div id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('userName')">Email is Mandotory</div>
-              <small id="emailHelp" class="form-text text-danger" *ngIf="mailExists">Email ID already exists</small>
-          </div>
-
-          <div class="mb-3">
-            <label for="userName" class="form-label">User Name</label>
-            <input type="text" class="form-control" aria-describedby="emailHelp" id="userName" name="userName"
-              formControlName="userName" placeholder="JohnWickMSD7"> 
-          </div>
-
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password" formControlName="password">
-            <small id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('password')">Password is
-              Mandotory</small>
-            <small id="emailHelp" class="form-text text-danger"
-              *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasNumber">Must Contain
-              atleast 1 Number</small>
-            <small id="emailHelp" class="form-text text-danger"
-              *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasCapitalCase">Must
-              Contain atleast 1 Capital letter</small>
-            <small id="emailHelp" class="form-text text-danger"
-              *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasSmallCase">Must
-              Contain atleast 1 small letter</small>
-            <small id="emailHelp" class="form-text text-danger"
-              *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasSpecialCharacters">Must
-              Contain atleast 1 Special character</small>
-            <small id="emailHelp" class="form-text text-danger"
-              *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.minLength">Must Contain
-              atleast 8 characters</small>
-            <small id="emailHelp" class="form-text text-danger"
-              *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.maxLength">Must Contain
-              atmost 20 characters</small>
-          </div>
-
-          <div class="mb-3">
-            <label for="confirmPassword" class="form-label">Confirm Password</label>
-            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
-              formControlName="confirmPassword">
-            <small id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('confirmPassword')">Confirm
-              Password is Mandotory</small>
-            <span class="form-text text-danger" *ngIf="studentEditForm.controls.confirmPassword.errors?.Mismatch">Password and
-              Confirm Password do not match</span>
-          </div>
+<mat-dialog-content>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 class="text-center">Student Edit Form</h3>
+          <form [formGroup]="studentEditForm">
+            <div class="mb-3">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" class="form-control" aria-describedby="emailHelp" id="firstName" name="firstName"
+                formControlName="firstName" placeholder="Wick">
+            </div>
   
-          
+            <div class="mb-3">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" class="form-control" aria-describedby="emailHelp" id="lastName" name="lastName"
+                formControlName="lastName" placeholder="John">
+            </div>
   
-          <div>
-            <button type="submit" class="btn btn-primary m-4" >Sign Up</button>
-          </div>
+            <div class="mb-3">
+              <label for="fatherName" class="form-label">Father Name</label>
+              <input type="text" class="form-control" aria-describedby="emailHelp" id="fatherName" name="fatherName"
+                formControlName="fatherName" placeholder="John">
+            </div>
   
+            <div class="mb-3">
+              <mat-form-field appearance="fill">
+                  <mat-label>Choose a date</mat-label>
+                  <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
   
-        </form>
+            <div class="mb-3">
+              <mat-form-field appearance="fill">
+                  <mat-label>Subjects</mat-label>
+                  <mat-select  formControlName="subjects" multiple>
+                    <mat-option *ngFor="let subject of subjectsData" [value]="subject.name">{{subject.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </div>
   
+            <div class="mb-3">
+              <label for="phoneNumber" class="form-label">Phone Number</label>
+              <input type="text" class="form-control" aria-describedby="emailHelp" id="phoneNumber" name="phoneNumber"
+                formControlName="phoneNumber" placeholder="Phone Number">
+            </div>
+  
+            <div class="form-floating">
+              <label for="floatingTextarea2">Address</label>
+              <textarea class="form-control" maxlength="200" placeholder="Leave Address here" id="address" name="address"
+                formControlName="address" style="height: 100px"></textarea>
+              <small id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('address')">Address is
+                Mandotory</small>
+            </div>
+  
+            <div class="mb-3 form-check">
+              <label  class="m-3">
+                  <input type="radio" value="Male" formControlName="gender">
+                    <span>Male</span>
+              </label>
+              <label class="m-3">
+                  <input type="radio" value="Female" formControlName="gender">
+                    <span>Female</span>
+              </label>
+            </div>
+  
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email"
+                formControlName="email" placeholder="abcdefg@gmail.com"
+                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                <div id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('userName')">Email is Mandotory</div>
+                <small id="emailHelp" class="form-text text-danger" *ngIf="mailExists">Email ID already exists</small>
+            </div>
+  
+            <div class="mb-3">
+              <label for="userName" class="form-label">User Name</label>
+              <input type="text" class="form-control" readonly aria-describedby="emailHelp" id="userName" name="userName"
+                formControlName="userName" placeholder="JohnWickMSD7"> 
+            </div>
+  
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password" formControlName="password">
+              <small id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('password')">Password is
+                Mandotory</small>
+              <small id="emailHelp" class="form-text text-danger"
+                *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasNumber">Must Contain
+                atleast 1 Number</small>
+              <small id="emailHelp" class="form-text text-danger"
+                *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasCapitalCase">Must
+                Contain atleast 1 Capital letter</small>
+              <small id="emailHelp" class="form-text text-danger"
+                *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasSmallCase">Must
+                Contain atleast 1 small letter</small>
+              <small id="emailHelp" class="form-text text-danger"
+                *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasSpecialCharacters">Must
+                Contain atleast 1 Special character</small>
+              <small id="emailHelp" class="form-text text-danger"
+                *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.minLength">Must Contain
+                atleast 8 characters</small>
+              <small id="emailHelp" class="form-text text-danger"
+                *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.maxLength">Must Contain
+                atmost 20 characters</small>
+            </div>
+  
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                formControlName="confirmPassword">
+              <small id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('confirmPassword')">Confirm
+                Password is Mandotory</small>
+              <span class="form-text text-danger" *ngIf="studentEditForm.controls.confirmPassword.errors?.Mismatch">Password and
+                Confirm Password do not match</span>
+            </div>
+          </form>
+    
+        </div>
       </div>
     </div>
+  <mat-dialog-content>
+            
+        <mat-dialog-actions>
+            <div>
+              <button mat-button mat-dialog-close>Cancel</button>
+              <button mat-button [mat-dialog-close]="true" type="submit" class="btn btn-primary m-4" (click)="studentEditSave()">Sign Up</button>
+            </div>
+          </mat-dialog-actions>
+    
   
-  </div>
-  <!-- (click)="studentSignUp()" -->
-
 

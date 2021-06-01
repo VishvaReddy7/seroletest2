@@ -6,12 +6,14 @@
       "fatherName": "Manohar Reddy Muddasani",
       "dateOfBirth": "1997-07-02T14:00:00.000Z",
       "subjects": [
+        "DBMS",
+        "OOAD",
         "CN",
-        "Java"
+        "Web Technologies"
       ],
-      "experience": 2,
-      "phoneNumber": "0415641507",
-      "address": "5 CAVENDISH STREET",
+      "experience": 4,
+      "phoneNumber": "0415640307",
+      "address": "53 Moree Avenue, Westmead, NSW, 2145",
       "gender": "Male",
       "email": "vishvaprakash03071997@gmail.com",
       "userName": "VISHVAMSD7",
@@ -36,7 +38,7 @@
       "email": "theju1@gmail.com",
       "userName": "Theju07",
       "password": "Theju07&",
-      "activitystatus": "Active",
+      "activitystatus": "InActive",
       "name": "Theju Muddasani",
       "id": 2
     }
@@ -48,13 +50,14 @@
       "fatherName": "Manohar Reddy Muddasani",
       "dateOfBirth": "1994-05-07T14:00:00.000Z",
       "subjects": [
-        "CN",
-        "Java"
+        "DBMS",
+        "Web Technologies",
+        "Angular"
       ],
       "phoneNumber": "8958266256",
-      "address": "5 CAVENDISH STREET",
+      "address": "Arkhansas, USA",
       "gender": "Male",
-      "email": "20158223@students.latrobe.edu.au",
+      "email": "chandureddy2258@gmail.com",
       "userName": "Chandu07",
       "password": "Msdhoni7&",
       "activitystatus": "Active",
@@ -64,10 +67,12 @@
     {
       "firstName": "Jeevan Sagar",
       "lastName": "Batana",
-      "fatherName": "Sukhibava",
+      "fatherName": "Tirupati Rao",
       "dateOfBirth": "1996-03-29T13:00:00.000Z",
       "subjects": [
         "DBMS",
+        "OOAD",
+        "Java",
         "DA"
       ],
       "phoneNumber": "9502511788",
@@ -98,17 +103,228 @@
       "activitystatus": "Active",
       "name": "Sai Tarun Reddy Muddasani",
       "id": 3
+    },
+    {
+      "firstName": "Jaya Chandra",
+      "lastName": "Jarajapu",
+      "fatherName": "Sreemanthudu",
+      "dateOfBirth": "1996-04-12T14:00:00.000Z",
+      "subjects": [
+        "DBMS",
+        "Java"
+      ],
+      "phoneNumber": "8106954303",
+      "address": "Railway Quarters",
+      "gender": "Male",
+      "email": "jai949@gmail.com",
+      "userName": "JuiceWorld",
+      "password": "Jaichandra7&",
+      "activitystatus": "Active",
+      "name": "Jaya Chandra Jarajapu",
+      "id": 4
+    },
+    {
+      "firstName": "Sai Vivek",
+      "lastName": "Garimella",
+      "fatherName": "Vivek",
+      "dateOfBirth": "1996-09-16T14:00:00.000Z",
+      "subjects": [
+        "Java",
+        "DA",
+        "AI"
+      ],
+      "phoneNumber": "7658986777",
+      "address": "Vijayawada",
+      "gender": "Male",
+      "email": "vivek13@gmail.com",
+      "userName": "Vivek13",
+      "password": "Vivekgarimella7&",
+      "activitystatus": "Active",
+      "name": "Sai Vivek Garimella",
+      "id": 5
+    },
+    {
+      "firstName": "Dhiraj Kumar",
+      "lastName": "Vadrangi",
+      "fatherName": "Dhiraj",
+      "dateOfBirth": "1996-10-12T14:00:00.000Z",
+      "subjects": [
+        "DBMS",
+        "Web Technologies"
+      ],
+      "phoneNumber": "9652485193",
+      "address": "Visalakshinagar",
+      "gender": "Male",
+      "email": "dhiraj7@gmail.com",
+      "userName": "Dhiraj13",
+      "password": "Dhirajkumar7&",
+      "activitystatus": "Active",
+      "name": "Dhiraj Kumar Vadrangi",
+      "id": 6
+    },
+    {
+      "firstName": "Tirumala Teja",
+      "lastName": "Creativity",
+      "fatherName": "Dharma Daddy",
+      "dateOfBirth": "1997-05-30T14:00:00.000Z",
+      "subjects": [
+        "CN",
+        "DA"
+      ],
+      "phoneNumber": "7093684563",
+      "address": "5 CAVENDISH STREET",
+      "gender": "Male",
+      "email": "tirumalateja7@gmail.com",
+      "userName": "TirumalaTeja31",
+      "password": "Tirumala31!",
+      "activitystatus": "Active",
+      "name": "Tirumala Teja Creativity",
+      "id": 7
+    },
+    {
+      "firstName": "Nihar Reddy",
+      "lastName": "Bommu",
+      "fatherName": "Ajay Nagalla",
+      "dateOfBirth": "1996-01-05T13:00:00.000Z",
+      "subjects": [
+        "OOAD",
+        "CN"
+      ],
+      "phoneNumber": "9948883692",
+      "address": "Ramanthapur",
+      "gender": "Male",
+      "email": "bommunihar7@gmail.com",
+      "userName": "Bommu7",
+      "password": "Bommunihar7&",
+      "activitystatus": "Active",
+      "name": "Nihar Reddy Bommu",
+      "id": 8
+    },
+    {
+      "firstName": "Dharma Teja",
+      "lastName": "Kalidhindi",
+      "fatherName": "Jeevan Daddy",
+      "dateOfBirth": "1996-09-10T14:00:00.000Z",
+      "subjects": [
+        "DBMS",
+        "Java",
+        "DA"
+      ],
+      "phoneNumber": "9705875584",
+      "address": "Granite Kondalu, Khammam",
+      "gender": "Male",
+      "email": "dharmateja7@gmail.com",
+      "userName": "Dharmateja7",
+      "password": "Dharma7&",
+      "activitystatus": "Active",
+      "name": "Dharma Teja Kalidhindi",
+      "id": 9
+    },
+    {
+      "firstName": "Prashant",
+      "lastName": "Sangeet",
+      "fatherName": "Jeevan Daddy",
+      "dateOfBirth": "1996-11-23T13:00:00.000Z",
+      "subjects": [
+        "DBMS",
+        "Java"
+      ],
+      "phoneNumber": "9866224623",
+      "address": "Seethammadara, Visakhapatnam, Andhra Pradesh",
+      "gender": "Male",
+      "email": "sprashanth7@gmail.com",
+      "userName": "SangeetPrahsant",
+      "password": "Prashant7&",
+      "activitystatus": "Active",
+      "name": "Prashant Sangeet",
+      "id": 10
+    },
+    {
+      "firstName": "Shruti",
+      "lastName": "Boddada",
+      "fatherName": "Prakash",
+      "dateOfBirth": "1995-05-18T14:00:00.000Z",
+      "subjects": [
+        "DBMS",
+        "CN",
+        "DA"
+      ],
+      "phoneNumber": "7675145862",
+      "address": "Kolkata",
+      "gender": "Female",
+      "email": "shruti7@gmail.com",
+      "userName": "Shruti7",
+      "password": "Shrutibatani7&",
+      "activitystatus": "Active",
+      "name": "Shruti Boddada",
+      "id": 11
+    },
+    {
+      "firstName": "Bharath Raja",
+      "lastName": "Koppisetti",
+      "fatherName": "Raja Bammardhi",
+      "dateOfBirth": "1997-07-18T14:00:00.000Z",
+      "subjects": [
+        "DBMS",
+        "CN"
+      ],
+      "phoneNumber": "9966275511",
+      "address": "Rajahmundry",
+      "gender": "Male",
+      "email": "bharath7@gmail.com",
+      "userName": "Bharath7",
+      "password": "Bharath7&",
+      "activitystatus": "Active",
+      "name": "Bharath Raja Koppisetti",
+      "id": 12
+    },
+    {
+      "firstName": "Sai Manoj",
+      "lastName": "Makineni",
+      "fatherName": "Jeevan Daddy",
+      "dateOfBirth": "1996-09-10T14:00:00.000Z",
+      "subjects": [
+        "CN",
+        "Network Engineering Fundamentals"
+      ],
+      "phoneNumber": "9845486321",
+      "address": "Pendhurthi",
+      "gender": "Male",
+      "email": "saimanoj7@gmail.com",
+      "userName": "Saimanoj7",
+      "password": "sAIMANOJ7&",
+      "activitystatus": "Active",
+      "name": "Sai Manoj Makineni",
+      "id": 13
+    },
+    {
+      "firstName": "Nikita",
+      "lastName": "Thawait",
+      "fatherName": "Jeevan Daddy",
+      "dateOfBirth": "1996-11-11T13:00:00.000Z",
+      "subjects": [
+        "CN",
+        "JAVA"
+      ],
+      "phoneNumber": "9545612578",
+      "address": "Steel Plant",
+      "gender": "Female",
+      "email": "nikita7@gmail.com",
+      "userName": "NikitaThwait",
+      "password": "Nikita7&",
+      "activitystatus": "Active",
+      "name": "Nikita Thawait",
+      "id": 14
     }
   ],
   "admin": [
     {
-      
       "firstName": "Vishva Prakash Reddy",
       "lastName": "Muddasani",
       "fatherName": "Manohar Reddy Muddasani",
       "dateOfBirth": "1997-07-02T14:00:00.000Z",
-      "phoneNumber": "0415641507",
-      "address": "5 CAVENDISH STREET",
+      "phoneNumber": "0415640307",
+      "address": "53 Moree Avenue, Westmead, NSW, 2145",
       "gender": "Male",
       "email": "vishvaprakash03071997@gmail.com",
       "userName": "VISHVAMSD7",
@@ -119,33 +335,95 @@
     }
   ],
   "subjects": [
-    { 
-      "id": "1",
-      "name": "DBMS"
+    {
+      "name": "DBMS",
+      "activitystatus": "Active",
+      "isActive": true,
+      "id": 1
     },
     {
-      "id": "2",
-      "name": "OOAD"
+      "name": "OOAD",
+      "activitystatus": "Active",
+      "isActive": true,
+      "id": 2
     },
     {
-      "id": "3",
-      "name": "CN"
+      "name": "CN",
+      "activitystatus": "Active",
+      "isActive": true,
+      "id": 3
     },
     {
-      "id": "4",
-      "name": "Java"
+      "name": "JAVA",
+      "activitystatus": "Active",
+      "isActive": true,
+      "id": 4
     },
     {
-      "id": "5",
-      "name": "DA"
+      "name": "Data Analytics",
+      "activitystatus": "Active",
+      "isActive": true,
+      "id": 5
     },
     {
-      "id": "6",
-      "name": "AI"
+      "name": "AI",
+      "activitystatus": "InActive",
+      "isActive": false,
+      "id": 6
     },
     {
-      "id": "7",
-      "name": "Web Technologies"
-    } 
-    ]
+      "name": "Web Technologies",
+      "activitystatus": "InActive",
+      "isActive": false,
+      "id": 7
+    },
+    {
+      "name": "CO",
+      "activitystatus": "InActive",
+      "isActive": false,
+      "id": 8
+    },
+    {
+      "name": "Data Structures",
+      "activitystatus": "InActive",
+      "isActive": false,
+      "id": 9
+    },
+    {
+      "name": "Data Science",
+      "activitystatus": "InActive",
+      "isActive": false,
+      "id": 10
+    },
+    {
+      "name": "Angular",
+      "activitystatus": "InActive",
+      "isActive": false,
+      "id": 11
+    },
+    {
+      "name": "Python",
+      "activitystatus": "InActive",
+      "isActive": false,
+      "id": 12
+    },
+    {
+      "name": "React",
+      "activitystatus": "InActive",
+      "isActive": false,
+      "id": 13
+    },
+    {
+      "name": "Big Data",
+      "activitystatus": "InActive",
+      "isActive": false,
+      "id": 14
+    },
+    {
+      "name": "Network Engineering Fundamentals",
+      "activitystatus": "InActive",
+      "isActive": false,
+      "id": 15
+    }
+  ]
 }

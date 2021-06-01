@@ -5,7 +5,11 @@ import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { SuccessfulpopdialogComponent } from './successfulpopdialog/successfulpopdialog.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
-import { EditPopupComponent } from './edit-popup/edit-popup.component';
+import { StudentEditComponent } from './student-edit/student-edit.component';
+import { Students } from './interfaces/studentsInterface';
+import { Subjects } from './interfaces/subjectsInterface';
+import { Admin } from './interfaces/adminInterface';
+import { Teachers } from './interfaces/teachersInterface';
 
 
 @Injectable({
@@ -13,44 +17,86 @@ import { EditPopupComponent } from './edit-popup/edit-popup.component';
 })
 export class RestService {
 
-  teacherData: any;
-  role: any;
-  loggedInPersonEmail: any;
-  loggedInPersonRole: any;
-  userExist: any;
+  
+  role: string | undefined;
+  loggedInPersonUserName: string | undefined;
+  loggedInPersonEmail: string | undefined;
+  loggedInPersonRole: string | undefined;
+  userExist: string | undefined;
+  loggedInUserName: string | undefined;
+  editPersonRole: string | undefined;
+
   
   
   
 
   constructor(private httpClient: HttpClient, public readonly dialog: MatDialog) { }
   
-  getTeacherData() {
-     return this.httpClient.get(`${environment.apiUrl}teachers`);
+  getTeacherData() : Observable<Teachers[]> {
+     return this.httpClient.get<Teachers[]>(`${environment.apiUrl}teachers`);
   }
 
-  getStudentData() {
-    return this.httpClient.get(`${environment.apiUrl}students`);
+  getStudentData() : Observable<Students[]> {
+    return this.httpClient.get<Students[]>(`${environment.apiUrl}students`);
   }
 
-  getAdminData() {
-    return this.httpClient.get(`${environment.apiUrl}admin`);
+  getAdminData() : Observable<Admin[]> {
+    return this.httpClient.get<Admin[]>(`${environment.apiUrl}admin`);
   }
 
-  getSubjectsData() {
-    return this.httpClient.get(`${environment.apiUrl}subjects`);
+  getSubjectsData() : Observable<Subjects[]> {
+    return this.httpClient.get<Subjects[]>(`${environment.apiUrl}subjects`);
   }
 
-  getLoggedInPersonData() {
-    return this.httpClient.get(`${environment.apiUrl}`+this.loggedInPersonRole+`/?email=`+this.loggedInPersonEmail);
+  getLoggedInPersonData() : Observable<object> {
+    return this.httpClient.get(`${environment.apiUrl}${this.loggedInPersonRole}/?userName=${this.loggedInPersonUserName}`);
   }
 
 
-  signUp(data: any) {
+  signUp(data: Students | Teachers) : Observable<Students | Teachers> {
     const options = {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     };
-    return this.httpClient.post(`${environment.apiUrl}`+this.role, data, options);
+    return this.httpClient.post<Students>(`${environment.apiUrl}${this.role}`, data, options);
   }
+
+  save(data: Students | Teachers | Admin) : Observable<Students> | Observable<Teachers> | Observable<Admin> {
+    const options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    };
+    return this.httpClient.put<Students | Teachers | Admin>(`${environment.apiUrl}${this.editPersonRole}/${data.id}`, data, options);
+    
+  }
+
+  delete(data: Teachers) : Observable<Teachers> {
+    const options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    };
+    let dataoptions={
+    "activitystatus":data.activitystatus
+    };
+     return this.httpClient.patch<Teachers>(`${environment.apiUrl}teachers/${data.id}`, dataoptions);
+  }
+
+  push(data: Subjects) : Observable<Subjects> {
+    const options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    };
+    return this.httpClient.post<Subjects>(`${environment.apiUrl}subjects`, data, options);
+  }
+
+  subjectToggle(data: Subjects) : Observable<Subjects>{
+    const options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    };
+    let dataoptions={
+      "activitystatus": data.activitystatus,
+      "isActive": data.isActive
+    }
+    return this.httpClient.patch<Subjects>(`${environment.apiUrl}subjects/${data.id}`, dataoptions);
+  }
+
+  
 
   openDialog(): Observable<any> {
     
@@ -61,33 +107,9 @@ export class RestService {
     });
     console.log()
     return dialogRef.afterClosed();
-    };
+    }
+  
 
-    openDialog2(): Observable<any> {
-      
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-        height: '190px',
-        width: '290px',
-        panelClass: 'confirm-dialog-container',
-        disableClose: true
-      });
-      console.log()
-      return dialogRef.afterClosed();
-      };
 
-      openDialogEdit(): Observable<any> {
-      
-        const dialogRef = this.dialog.open(EditPopupComponent, {
-          height: 'auto',
-          width: 'auto',
-          
-          // panelClass: 'confirm-dialog-container',
-          disableClose: true
-        });
-        console.log()
-        return dialogRef.afterClosed();
-        };
-
-      
-
+    
 }

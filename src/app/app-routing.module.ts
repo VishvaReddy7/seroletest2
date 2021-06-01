@@ -6,15 +6,20 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { StudentsListComponent } from './students-list/students-list.component';
 import { TeachersListComponent } from './teachers-list/teachers-list.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { SubjectsComponent } from './subjects/subjects.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch:'full'},
   {path: 'signup', component: SignupComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'studentslist', component: StudentsListComponent},
-  {path: 'teachersList', component: TeachersListComponent},
-  {path: 'myProfile', component: MyProfileComponent}
+  {path: 'dashboard', component: DashboardComponent, children: [
+    
+    {path: 'studentslist', outlet:'inside', component: StudentsListComponent},
+    {path: 'teachersList', outlet:'inside', component: TeachersListComponent},
+    {path: 'myProfile', outlet:'inside', component: MyProfileComponent},
+    {path: 'subjects', outlet:'inside', component: SubjectsComponent}
+  ]},
+  
 ];
 
 @NgModule({

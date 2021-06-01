@@ -1,0 +1,39 @@
+<mat-dialog-content>
+    <div class="container-fluid mt-5">
+        <h3>Add Subjects</h3>
+         
+             <form [formGroup]="subjectAddForm" >
+                 <div formArrayName="subjects">
+                    <div  *ngFor="let item of userFormGroups.controls; let i =index;"  >
+                        <div [formGroupName]="i">
+                            <span>
+                               <input type="text" class="form-control" style="display: inline; width: 50%; margin-right: 3px;" aria-describedby="emailHelp" id="name" name="name"
+                               formControlName="name" placeholder="Subject">
+                            </span>
+                            
+                            <span >
+                                <button mat-mini-fab color="warn" aria-label="Example icon button with a delete icon" *ngIf="showDeletebutton" style="margin-left: 3px;" (click)="removeSubjectField(i)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </span>
+                            <br>
+                            <small id="emailHelp" class="form-text text-danger" *ngIf="subjectExists">Subject already Exists</small>
+
+                            
+                        </div>
+                    </div>
+                 </div>
+                 <button mat-fab color="primary"  (click)="addSubjectField()">
+                    <mat-icon>add</mat-icon>
+                  </button>
+
+             </form>
+             
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button type="submit" class="btn btn-primary m-4" (click)="addSubjects()">Push Subjects</button>
+</mat-dialog-actions>
+
+
+
