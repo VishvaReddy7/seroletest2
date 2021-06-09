@@ -2,8 +2,8 @@
     <div class="container mt-5">
       <div class="row">
         <div class="col-sm-12">
-          <h3 class="text-center">Student Edit Form</h3>
-          <form [formGroup]="studentEditForm">
+          <h3 class="text-center">Admin Sign Up Form</h3>
+          <form [formGroup]="adminEditForm">
             <div class="mb-3">
               <label for="firstName" class="form-label">First Name</label>
               <input type="text" class="form-control" aria-describedby="emailHelp" id="firstName" name="firstName"
@@ -28,15 +28,6 @@
                   <input matInput [matDatepicker]="picker" formControlName="dateOfBirth">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-  
-            <div class="mb-3">
-              <mat-form-field appearance="fill">
-                  <mat-label>Subjects</mat-label>
-                  <mat-select  formControlName="subjects" multiple>
-                    <mat-option *ngFor="let subject of subjectsData" [value]="subject.name">{{subject.name}}</mat-option>
-                  </mat-select>
                 </mat-form-field>
             </div>
   
@@ -86,22 +77,22 @@
               <small id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('password')">Password is
                 Mandotory</small>
               <small id="emailHelp" class="form-text text-danger"
-                *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasNumber">Must Contain
+                *ngIf="adminEditForm.controls.password.touched && adminEditForm.controls.password.errors?.hasNumber">Must Contain
                 atleast 1 Number</small>
               <small id="emailHelp" class="form-text text-danger"
-                *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasCapitalCase">Must
+                *ngIf="adminEditForm.controls.password.touched && adminEditForm.controls.password.errors?.hasCapitalCase">Must
                 Contain atleast 1 Capital letter</small>
               <small id="emailHelp" class="form-text text-danger"
-                *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasSmallCase">Must
+                *ngIf="adminEditForm.controls.password.touched && adminEditForm.controls.password.errors?.hasSmallCase">Must
                 Contain atleast 1 small letter</small>
               <small id="emailHelp" class="form-text text-danger"
-                *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.hasSpecialCharacters">Must
+                *ngIf="adminEditForm.controls.password.touched && adminEditForm.controls.password.errors?.hasSpecialCharacters">Must
                 Contain atleast 1 Special character</small>
               <small id="emailHelp" class="form-text text-danger"
-                *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.minLength">Must Contain
+                *ngIf="adminEditForm.controls.password.touched && adminEditForm.controls.password.errors?.minLength">Must Contain
                 atleast 8 characters</small>
               <small id="emailHelp" class="form-text text-danger"
-                *ngIf="studentEditForm.controls.password.touched && studentEditForm.controls.password.errors?.maxLength">Must Contain
+                *ngIf="adminEditForm.controls.password.touched && adminEditForm.controls.password.errors?.maxLength">Must Contain
                 atmost 20 characters</small>
             </div>
   
@@ -111,22 +102,27 @@
                 formControlName="confirmPassword">
               <small id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('confirmPassword')">Confirm
                 Password is Mandotory</small>
-              <span class="form-text text-danger" *ngIf="studentEditForm.controls.confirmPassword.errors?.Mismatch">Password and
+              <span class="form-text text-danger" *ngIf="adminEditForm.controls.confirmPassword.errors?.Mismatch">Password and
                 Confirm Password do not match</span>
             </div>
           </form>
     
         </div>
       </div>
+    
     </div>
   <mat-dialog-content>
             
         <mat-dialog-actions>
             <div>
-              <button mat-button mat-dialog-close>Cancel</button>
-              <button mat-button [mat-dialog-close]="true" type="submit" class="btn btn-primary m-4" (click)="studentEditSave()">Sign Up</button>
+              <button mat-button mat-dialog-close style="margin-right: auto" >Cancel</button>
+              <button mat-button [mat-dialog-close]="true" type="submit" class="btn btn-primary m-4" (click)="adminEditSave()">Sign Up</button>
+              
             </div>
           </mat-dialog-actions>
     
-  
+    
+          
+ <!-- (click)="studentSignUp()" -->
+
 

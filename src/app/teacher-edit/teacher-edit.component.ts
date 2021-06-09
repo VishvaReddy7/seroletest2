@@ -11,40 +11,33 @@ import { RestService } from '../rest.service';
 import { StateService } from '../store/state.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import { first, filter} from 'rxjs/operators';
-import { Subscription } from 'rxjs';
-import { Students } from '../interfaces/studentsInterface';
+import { first } from 'rxjs/operators';
+import { Teachers } from '../interfaces/teachersInterface';
 import { Subjects } from '../interfaces/subjectsInterface';
 import { Admin } from '../interfaces/adminInterface';
-import { Teachers } from '../interfaces/teachersInterface';
+import { Students } from '../interfaces/studentsInterface';
 
 
-export interface EditDialogStudents {
-         userDetails: Students,
-         disableClose: boolean
+export interface EditDialogTeachers {
+  userDetails: Teachers,
+  disableClose: boolean
 }
 
-
-
 @Component({
-  selector: 'app-student-edit',
-  templateUrl: './student-edit.component.html',
-  styleUrls: ['./student-edit.component.css']
+  selector: 'app-teacher-edit',
+  templateUrl: './teacher-edit.component.html',
+  styleUrls: ['./teacher-edit.component.css']
 })
-export class StudentEditComponent implements OnInit {
+export class TeacherEditComponent implements OnInit {
 
-  studentEditForm! : FormGroup;
+  teacherEditForm! : FormGroup;
   mailExists = false;
   
-  studentData: Array<Students> = [];
-  subjectsData: Array<Subjects> = [];
-  userDetails!: Students;
-  details: Students | undefined;
-
-  
- 
+  teacherData: Array<Teachers> = [];
+  subjects: Array<Subjects> = [];
+  userDetails!: Teachers;
+  details: Teachers | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,24 +45,26 @@ export class StudentEditComponent implements OnInit {
     private stateService: StateService,
     private router: Router,
     private dialog: MatDialog,
-    private dialogRef: MatDialogRef<StudentEditComponent> ,
-    @Inject(MAT_DIALOG_DATA) public data: EditDialogStudents  
-  ) {}
+    private dialogRef: MatDialogRef<TeacherEditComponent> ,
+    @Inject(MAT_DIALOG_DATA) public data: EditDialogTeachers    
+  ) { }
 
   ngOnInit(): void {
-
-    this.getSubjectData();
+    this.getSubjectsData();
+    
     this.userDetails = this.data.userDetails;
-    this.createStudentEditForm(this.userDetails);
-    this.getStudentDtata();
+    
+    this.createTeacherEditForm(this.userDetails);
+    this.getTeacherData();
     
     console.log(this.userDetails);
   }
 
-  createStudentEditForm(userDetails: Students) : void {
-    
+  createTeacherEditForm(userDetails: Teachers) : void {
+
+
     console.log(userDetails);
-    this.studentEditForm = this.formBuilder.group(
+    this.teacherEditForm = this.formBuilder.group(
       {
         firstName: [
           userDetails.firstName,
@@ -105,6 +100,13 @@ export class StudentEditComponent implements OnInit {
           userDetails.subjects,
           [
             Validators.required
+          ],
+        ],
+        experience: [
+          userDetails.experience,
+          [
+            Validators.required,
+            Validators.pattern('^[0-9]+$')
           ],
         ],
         phoneNumber: [
@@ -152,31 +154,31 @@ export class StudentEditComponent implements OnInit {
     
   }
 
-  studentEditSave() : void {
+  teacherEditSave() : void {
 
     this.details = {
-      firstName: this.studentEditForm.controls['firstName'].value,
-      lastName: this.studentEditForm.controls['lastName'].value,
-      fatherName: this.studentEditForm.controls['fatherName'].value,
-      dateOfBirth: this.studentEditForm.controls['dateOfBirth'].value,
-      subjects: this.studentEditForm.controls['subjects'].value,
-      phoneNumber: this.studentEditForm.controls['phoneNumber'].value,
-      address: this.studentEditForm.controls['address'].value,
-      gender: this.studentEditForm.controls['gender'].value,
-      email: this.studentEditForm.controls['email'].value.toLowerCase(),
-      userName: this.studentEditForm.controls['userName'].value,
-      password: this.studentEditForm.controls['password'].value,
+      firstName: this.teacherEditForm.controls['firstName'].value,
+      lastName: this.teacherEditForm.controls['lastName'].value,
+      fatherName: this.teacherEditForm.controls['fatherName'].value,
+      dateOfBirth: this.teacherEditForm.controls['dateOfBirth'].value,
+      subjects: this.teacherEditForm.controls['subjects'].value,
+      experience: this.teacherEditForm.controls['experience'].value,
+      phoneNumber: this.teacherEditForm.controls['phoneNumber'].value,
+      address: this.teacherEditForm.controls['address'].value,
+      gender: this.teacherEditForm.controls['gender'].value,
+      email: this.teacherEditForm.controls['email'].value.toLowerCase(),
+      userName: this.teacherEditForm.controls['userName'].value,
+      password: this.teacherEditForm.controls['password'].value,
       activitystatus: 'Active',
       name:
-        this.studentEditForm.controls['firstName'].value +
+        this.teacherEditForm.controls['firstName'].value +
         ' ' +
-        this.studentEditForm.controls['lastName'].value,
-      id: this.studentEditForm.controls['id'].value  
+        this.teacherEditForm.controls['lastName'].value,
+      id: this.teacherEditForm.controls['id'].value  
     };
     console.log(this.details.id);
-    this.restService.editPersonRole = 'students';
+    this.restService.editPersonRole = 'teachers';
     this.restService.loggedInUserName = this.details.userName;
-    
     // this.restService.save(this.details).subscribe((response: Students | Teachers | Admin) => {
     //   console.log("response=>",response);
     // },
@@ -184,14 +186,13 @@ export class StudentEditComponent implements OnInit {
 
     // });
     this.stateService.save(this.details);
-  
-     
+
   }
 
   fieldNameStatus(fieldName: string | number) {
     if (
-      this.studentEditForm.controls[fieldName].touched &&
-      this.studentEditForm.controls[fieldName].errors?.required
+      this.teacherEditForm.controls[fieldName].touched &&
+      this.teacherEditForm.controls[fieldName].errors?.required
     ) {
       return true;
     } else {
@@ -228,21 +229,22 @@ export class StudentEditComponent implements OnInit {
     };
   }
 
-  getSubjectData() : void { 
+  getSubjectsData() : void {
     this.restService.getSubjectsData().pipe(
-      filter((subject: Subjects[]) => !!subject),
       first()
     ).subscribe((response: Subjects[]) => {
-      this.subjectsData = response;
+      this.subjects = response;
     });
   }
 
-  getStudentDtata() : void {
-    this.restService.getStudentData().pipe(
+  getTeacherData() : void {
+    this.restService.getTeacherData().pipe(
       first()
-    ).subscribe((response: Students[]) => {
-      this.studentData = response;
+    ).subscribe((response: Teachers[]) => {
+      this.teacherData = response;
     });
   }
-
+  
 }
+
+

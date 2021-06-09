@@ -11,65 +11,55 @@ import { RestService } from '../rest.service';
 import { StateService } from '../store/state.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import { first, filter} from 'rxjs/operators';
-import { Subscription } from 'rxjs';
-import { Students } from '../interfaces/studentsInterface';
-import { Subjects } from '../interfaces/subjectsInterface';
+import { first, filter, skipWhile} from 'rxjs/operators';
 import { Admin } from '../interfaces/adminInterface';
+import { Students } from '../interfaces/studentsInterface';
 import { Teachers } from '../interfaces/teachersInterface';
 
 
-export interface EditDialogStudents {
-         userDetails: Students,
-         disableClose: boolean
+export interface EditDialogAdmin {
+  userDetails: Admin,
+  disableClose: boolean
 }
 
 
-
 @Component({
-  selector: 'app-student-edit',
-  templateUrl: './student-edit.component.html',
-  styleUrls: ['./student-edit.component.css']
+  selector: 'app-admin-edit',
+  templateUrl: './admin-edit.component.html',
+  styleUrls: ['./admin-edit.component.css']
 })
-export class StudentEditComponent implements OnInit {
+export class AdminEditComponent implements OnInit {
 
-  studentEditForm! : FormGroup;
-  mailExists = false;
+  adminEditForm! : FormGroup;
+  mailExists : boolean = false;
   
-  studentData: Array<Students> = [];
-  subjectsData: Array<Subjects> = [];
-  userDetails!: Students;
-  details: Students | undefined;
+  adminData: Array<Admin>= [] ;
+  userDetails!: Admin;
+  details: Admin | undefined;
 
-  
- 
-
-  constructor(
-    private formBuilder: FormBuilder,
+  constructor(private formBuilder: FormBuilder,
     private restService: RestService,
     private stateService: StateService,
     private router: Router,
     private dialog: MatDialog,
-    private dialogRef: MatDialogRef<StudentEditComponent> ,
-    @Inject(MAT_DIALOG_DATA) public data: EditDialogStudents  
-  ) {}
+    private dialogRef: MatDialogRef<AdminEditComponent> ,
+    @Inject(MAT_DIALOG_DATA) public data: EditDialogAdmin) { }
+  
 
   ngOnInit(): void {
 
-    this.getSubjectData();
     this.userDetails = this.data.userDetails;
-    this.createStudentEditForm(this.userDetails);
-    this.getStudentDtata();
+    
+    this.createAdminEditForm(this.userDetails);
+    this.getAdminData();
     
     console.log(this.userDetails);
   }
 
-  createStudentEditForm(userDetails: Students) : void {
-    
-    console.log(userDetails);
-    this.studentEditForm = this.formBuilder.group(
+  createAdminEditForm(userDetails: Admin) : void {
+    console.log(this.userDetails);
+    this.adminEditForm = this.formBuilder.group(
       {
         firstName: [
           userDetails.firstName,
@@ -97,12 +87,6 @@ export class StudentEditComponent implements OnInit {
         ],
         dateOfBirth: [
           userDetails.dateOfBirth,
-          [
-            Validators.required
-          ],
-        ],
-        subjects: [
-          userDetails.subjects,
           [
             Validators.required
           ],
@@ -149,35 +133,31 @@ export class StudentEditComponent implements OnInit {
         validator: this.ConfirmPasswordValidator('password', 'confirmPassword'),
       }
     );
-    
   }
 
-  studentEditSave() : void {
+  adminEditSave() : void {
 
     this.details = {
-      firstName: this.studentEditForm.controls['firstName'].value,
-      lastName: this.studentEditForm.controls['lastName'].value,
-      fatherName: this.studentEditForm.controls['fatherName'].value,
-      dateOfBirth: this.studentEditForm.controls['dateOfBirth'].value,
-      subjects: this.studentEditForm.controls['subjects'].value,
-      phoneNumber: this.studentEditForm.controls['phoneNumber'].value,
-      address: this.studentEditForm.controls['address'].value,
-      gender: this.studentEditForm.controls['gender'].value,
-      email: this.studentEditForm.controls['email'].value.toLowerCase(),
-      userName: this.studentEditForm.controls['userName'].value,
-      password: this.studentEditForm.controls['password'].value,
+      firstName: this.adminEditForm.controls['firstName'].value,
+      lastName: this.adminEditForm.controls['lastName'].value,
+      fatherName: this.adminEditForm.controls['fatherName'].value,
+      dateOfBirth: this.adminEditForm.controls['dateOfBirth'].value,
+      phoneNumber: this.adminEditForm.controls['phoneNumber'].value,
+      address: this.adminEditForm.controls['address'].value,
+      gender: this.adminEditForm.controls['gender'].value,
+      email: this.adminEditForm.controls['email'].value.toLowerCase(),
+      userName: this.adminEditForm.controls['userName'].value,
+      password: this.adminEditForm.controls['password'].value,
       activitystatus: 'Active',
       name:
-        this.studentEditForm.controls['firstName'].value +
+        this.adminEditForm.controls['firstName'].value +
         ' ' +
-        this.studentEditForm.controls['lastName'].value,
-      id: this.studentEditForm.controls['id'].value  
+        this.adminEditForm.controls['lastName'].value,
+      id: this.adminEditForm.controls['id'].value  
     };
     console.log(this.details.id);
-    this.restService.editPersonRole = 'students';
-    this.restService.loggedInUserName = this.details.userName;
-    
-    // this.restService.save(this.details).subscribe((response: Students | Teachers | Admin) => {
+    this.restService.editPersonRole = 'admin';
+    // this.restService.save(this.details).subscribe((response: Admin | Students | Teachers) => {
     //   console.log("response=>",response);
     // },
     // (error) => {
@@ -188,10 +168,11 @@ export class StudentEditComponent implements OnInit {
      
   }
 
+
   fieldNameStatus(fieldName: string | number) {
     if (
-      this.studentEditForm.controls[fieldName].touched &&
-      this.studentEditForm.controls[fieldName].errors?.required
+      this.adminEditForm.controls[fieldName].touched &&
+      this.adminEditForm.controls[fieldName].errors?.required
     ) {
       return true;
     } else {
@@ -228,20 +209,19 @@ export class StudentEditComponent implements OnInit {
     };
   }
 
-  getSubjectData() : void { 
-    this.restService.getSubjectsData().pipe(
-      filter((subject: Subjects[]) => !!subject),
-      first()
-    ).subscribe((response: Subjects[]) => {
-      this.subjectsData = response;
-    });
-  }
+  getAdminData() : void {
+    // this.restService.getAdminData().pipe(
+    //   first()
+    // ).subscribe((response: Admin[]) => {
+    //   this.adminData = response;
+    // });
 
-  getStudentDtata() : void {
-    this.restService.getStudentData().pipe(
+    this.stateService.getAdminData();
+    this.stateService.getAdminList().pipe(
+      skipWhile((item: Admin[]) => !item),
       first()
-    ).subscribe((response: Students[]) => {
-      this.studentData = response;
+    ).subscribe((response: Admin[]) => {
+      this.adminData = response;
     });
   }
 

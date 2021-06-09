@@ -4,8 +4,13 @@ import { Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RestService } from '../rest.service';
+import { StateService } from '../store/state.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SuccessfulpopdialogComponent } from '../successfulpopdialog/successfulpopdialog.component';
+import { first, skipWhile } from 'rxjs/operators';
+import { Teachers } from '../interfaces/teachersInterface';
+import { Students } from '../interfaces/studentsInterface';
+import { Admin } from '../interfaces/adminInterface';
 
 @Component({
   selector: 'app-login',
@@ -19,32 +24,24 @@ export class LoginComponent implements OnInit {
   passwordIncorrect = false;
   noData = false;
 
-  teacherData: any = [];
-  studentData: any = [];
-  adminData: any = [];
+  teacherData: Array<Teachers> = [];
+  studentData: Array<Students> = [];
+  adminData: Array<Admin> = [];
 
   constructor(private formBuilder: FormBuilder,
      private router: Router,
      private restService: RestService,
+     private stateService: StateService,
      public  readonly dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.createLoginForm();
-
-    this.restService.getTeacherData().subscribe((response) => {
-      this.teacherData = response;
-    });
-
-    this.restService.getStudentData().subscribe((response) => {
-      this.studentData = response;
-    });
-
-    this.restService.getAdminData().subscribe((response) => {
-      this.adminData = response;
-    });
+    this.getStudentData();
+    this.getTeacherData();
+    this.getAdminData();  
   }
 
-  createLoginForm() {
+  createLoginForm() : void {
     this.loginForm = this.formBuilder.group({
       role: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
@@ -61,7 +58,7 @@ export class LoginComponent implements OnInit {
     }
   }
   
-  login(){
+  login() : void {
 
     let details = {
       role: this.loginForm.controls['role'].value,
@@ -71,17 +68,20 @@ export class LoginComponent implements OnInit {
 
     this.restService.loggedInPersonEmail = details.email;
     this.restService.loggedInPersonRole = details.role;
+   
+     console.log(this.restService.loggedInPersonRole);
 
-     console.log(this.loginForm.controls.role.value);
-
-    if(this.loginForm.controls.role.value === 'teacher') {
+    if(this.loginForm.controls.role.value === 'teachers') {
       if(this.teacherData.length==0){
         this.noData = true;
       }
       else{
-        this.teacherData.forEach((element: any) => {
+        this.teacherData.forEach((element: Teachers) => {
           if(element.email === details.email){
             if(element.password  === details.password){
+              var loggedInPerson = this.teacherData.find((obj : { email: string; }) => { return obj.email === details.email })
+              console.log("loggedInPerson=>",loggedInPerson);
+              this.restService.loggedInPersonUserName = loggedInPerson?.userName;
               const dialogRef = this.dialog.open(SuccessfulpopdialogComponent);
               this.router.navigate([`/dashboard`]);
             }
@@ -99,20 +99,23 @@ export class LoginComponent implements OnInit {
       }
     }
 
-    else if(this.loginForm.controls.role.value === 'student') {
+    else if(this.loginForm.controls.role.value === 'students') {
+      
       if(this.studentData.length==0){
         this.noData = true;
       }
       else{
-        this.studentData.forEach((element: any) => {
+        this.studentData.forEach((element: Students) => {
           if(element.email === details.email){
             if(element.password  === details.password){
+              var loggedInPerson = this.studentData.find((obj: { email: string; })  => { return obj.email === details.email })
+              console.log("loggedInPerson=>",loggedInPerson);
+              this.restService.loggedInPersonUserName = loggedInPerson?.userName;
               const dialogRef = this.dialog.open(SuccessfulpopdialogComponent);
               this.router.navigate([`/dashboard`]);
             }
             else{
               this.passwordIncorrect = true;
-          
             }
             
           }
@@ -126,13 +129,19 @@ export class LoginComponent implements OnInit {
   
 
     else {
+      var loggedInPerson = this.adminData.find((obj : { email: string; }) => { return obj.email === details.email })
+      console.log("loggedInPerson=>", loggedInPerson);
+      this.restService.loggedInPersonUserName = loggedInPerson?.userName;
       if(this.adminData.length==0){
         this.noData = true;
       }
       else{
-        this.adminData.forEach((element: any) => {
+        this.adminData.forEach((element: Admin) => {
           if(element.email === details.email){
             if(element.password  === details.password){
+              var loggedInPerson = this.adminData.find((obj : { email: string; }) => { return obj.email === details.email })
+              console.log("loggedInPerson=>", loggedInPerson);
+              this.restService.loggedInPersonUserName = loggedInPerson?.userName;
               const dialogRef = this.dialog.open(SuccessfulpopdialogComponent);
               this.router.navigate([`/dashboard`]);
             }
@@ -150,6 +159,60 @@ export class LoginComponent implements OnInit {
       }
     }
   }
+  getStudentData() : void {
+    // this.restService.getStudentData().pipe(
+    //   first()
+    // ).subscribe((response: Students[]) => {
+    //   this.studentData = response;
+    // });
+
+    this.stateService.getStudentData();
+    this.stateService.getStudentsList().pipe(
+      skipWhile((item: Students[]) => !item),
+      first()
+    ).subscribe((response: Students[]) => {
+      this.studentData = response;
+    });
+  }
+
+  getTeacherData() : void {
+    // this.restService.getTeacherData().pipe(
+    //   first()
+    // ).subscribe((response: Teachers[]) => {
+    //   this.teacherData = response;
+    // });
+
+    this.stateService.getTeacherData();
+    this.stateService.getTeachersList().pipe(
+      skipWhile((item: Teachers[]) => !item),
+      first()
+    ).subscribe((response: Teachers[]) => {
+      this.teacherData = response;
+    });
+  }
+
+  getAdminData() : void {
+    // this.restService.getAdminData().pipe(
+    //   first()
+    // ).subscribe((response: Admin[]) => {
+    //   this.adminData = response;
+    // });
+
+    this.stateService.getAdminData();
+    this.stateService.getAdminList().pipe(
+      skipWhile((item: Admin[]) => !item),
+      first()
+    ).subscribe((response: Admin[]) => {
+      this.adminData = response;
+    });
+  }
+  
+
+  
+
+  
+
+
 
   
 

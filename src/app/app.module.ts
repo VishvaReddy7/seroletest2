@@ -13,6 +13,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { NgxsModule } from '@ngxs/store';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -29,8 +33,11 @@ import { TeachersListComponent } from './teachers-list/teachers-list.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
-import { EditPopupComponent } from './edit-popup/edit-popup.component';
 import { StudentEditComponent } from './student-edit/student-edit.component';
+import { TeacherEditComponent } from './teacher-edit/teacher-edit.component';
+import { AdminEditComponent } from './admin-edit/admin-edit.component';
+import { SubjectAddComponent } from './subject-add/subject-add.component';
+import { DataState } from './store/coursehub.state';
 
 
 
@@ -50,8 +57,10 @@ import { StudentEditComponent } from './student-edit/student-edit.component';
     MyProfileComponent,
     SubjectsComponent,
     ConfirmationDialogComponent,
-    EditPopupComponent,
-    StudentEditComponent
+    StudentEditComponent,
+    TeacherEditComponent,
+    AdminEditComponent,
+    SubjectAddComponent
   ],
   imports: [
     BrowserModule,
@@ -68,11 +77,16 @@ import { StudentEditComponent } from './student-edit/student-edit.component';
     MatButtonToggleModule,
     MatFormFieldModule,
     MatDialogModule,
-    MatTableModule   
+    MatTableModule,
+    MatIconModule,
+    MatSlideToggleModule,
+    NgxsModule.forFeature([DataState]),
+    NgxsModule.forRoot()   
     
 
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [StudentEditComponent]
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RestService } from '../rest.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,40 +10,30 @@ export class DashboardComponent implements OnInit {
 
   showStudents: boolean = false;
   showTeachers: boolean = false;
-  showMyProfile: boolean = false;
   showSubjects: boolean = false;
 
-  constructor() { }
+  constructor(private restService: RestService) { }
 
   ngOnInit(): void {
+    this.displaySideNav();
   }
 
-  showStudentList() {
-      this.showStudents = true;
-      this.showTeachers = false;
-      this.showMyProfile = false;
-      this.showSubjects = false;
-  }
-
-  showTeacherList() {
-    this.showTeachers = true;
-    this.showStudents = false;
-    this.showMyProfile = false;
-    this.showSubjects = false;
-  }
-
-  showMyProfileData() {
+  displaySideNav() : void {
+    if(this.restService.loggedInPersonRole === 'students') {
       this.showStudents = false;
       this.showTeachers = false;
-      this.showMyProfile = true;
       this.showSubjects = false;
+    }
+    else if(this.restService.loggedInPersonRole === 'teachers') {
+      this.showStudents = true;
+      this.showTeachers = false;
+      this.showSubjects = false;
+    }
+    else {
+      this.showStudents = true;
+      this.showTeachers = true;
+      this.showSubjects = true;
+    }
   }
-
-  showSubjectsData() {
-    this.showStudents = false;
-    this.showTeachers = false;
-    this.showMyProfile = false;
-    this.showSubjects = true;
-  }
-
+  
 }

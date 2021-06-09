@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditPopupComponent } from './edit-popup.component';
+import { SubjectAddComponent } from './subject-add.component';
 
-describe('EditPopupComponent', () => {
-  let component: EditPopupComponent;
-  let fixture: ComponentFixture<EditPopupComponent>;
+describe('SubjectAddComponent', () => {
+  let component: SubjectAddComponent;
+  let fixture: ComponentFixture<SubjectAddComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditPopupComponent ]
+      declarations: [ SubjectAddComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditPopupComponent);
+    fixture = TestBed.createComponent(SubjectAddComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
