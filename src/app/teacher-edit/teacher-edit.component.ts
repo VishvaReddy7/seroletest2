@@ -8,6 +8,7 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import { RestService } from '../rest.service';
+import { StateService } from '../store/state.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
@@ -16,6 +17,12 @@ import { Teachers } from '../interfaces/teachersInterface';
 import { Subjects } from '../interfaces/subjectsInterface';
 import { Admin } from '../interfaces/adminInterface';
 import { Students } from '../interfaces/studentsInterface';
+
+
+export interface EditDialogTeachers {
+  userDetails: Teachers,
+  disableClose: boolean
+}
 
 @Component({
   selector: 'app-teacher-edit',
@@ -35,10 +42,11 @@ export class TeacherEditComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private restService: RestService,
+    private stateService: StateService,
     private router: Router,
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<TeacherEditComponent> ,
-    @Inject(MAT_DIALOG_DATA) public data: any  
+    @Inject(MAT_DIALOG_DATA) public data: EditDialogTeachers    
   ) { }
 
   ngOnInit(): void {
@@ -171,12 +179,13 @@ export class TeacherEditComponent implements OnInit {
     console.log(this.details.id);
     this.restService.editPersonRole = 'teachers';
     this.restService.loggedInUserName = this.details.userName;
-    this.restService.save(this.details).subscribe((response: Students | Teachers | Admin) => {
-      console.log("response=>",response);
-    },
-    (error) => {
+    // this.restService.save(this.details).subscribe((response: Students | Teachers | Admin) => {
+    //   console.log("response=>",response);
+    // },
+    // (error) => {
 
-    });
+    // });
+    this.stateService.save(this.details);
 
   }
 

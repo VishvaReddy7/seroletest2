@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RestService } from '../rest.service';
+import { StateService } from '../store/state.service';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { StudentEditComponent } from '../student-edit/student-edit.component';
-import { first, filter} from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { first, filter, skipWhile} from 'rxjs/operators';
+import { from, Subscription } from 'rxjs';
 import { Observable } from 'rxjs';
 import { StudentsignupComponent } from '../studentsignup/studentsignup.component'
 import { Students } from '../interfaces/studentsInterface';
@@ -29,6 +30,7 @@ export class StudentsListComponent implements OnInit, OnDestroy {
   
 
   constructor(private restService: RestService, 
+    private stateService: StateService,
     private router: Router,
     private dialog: MatDialog
    ) { }
@@ -89,7 +91,15 @@ export class StudentsListComponent implements OnInit, OnDestroy {
     }
 
     getStudentData(): void {
-      this.subscription=this.restService.getStudentData().pipe(
+      // this.subscription=this.restService.getStudentData().pipe(
+      //   first()
+      // ).subscribe((response: Students[]) => {
+      //   this.studentData = response;
+      // });
+
+      this.stateService.getStudentData();
+      this.stateService.getStudentsList().pipe(
+        skipWhile((item: Students[]) => !item),
         first()
       ).subscribe((response: Students[]) => {
         this.studentData = response;
@@ -98,13 +108,21 @@ export class StudentsListComponent implements OnInit, OnDestroy {
     }
 
     getSubjectsData() : void {
-      this.restService.getSubjectsData().pipe(
-        filter((subject: Subjects[]) => !!subject),
-        first()
+      // this.restService.getSubjectsData().pipe(
+      //   filter((subject: Subjects[]) => !!subject),
+      //   first()
   
-      ).subscribe((response: Subjects[]) => {
-        this.subjectsData = response;
-      });
+      // ).subscribe((response: Subjects[]) => {
+      //   this.subjectsData = response;
+      // });
+
+      this.stateService.getSubjectsData();
+    this.stateService.getSubjectsList().pipe(
+      skipWhile((item: Subjects[]) => !item),
+      first()
+    ).subscribe((response: Subjects[]) => {
+      this.subjectsData = response;
+    });
     } 
 
 }

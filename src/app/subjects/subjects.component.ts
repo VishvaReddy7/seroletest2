@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../rest.service';
+import { StateService } from '../store/state.service';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { SubjectAddComponent } from '../subject-add/subject-add.component';
-import { first } from 'rxjs/operators';
+import { first, skipWhile } from 'rxjs/operators';
 import { Subjects } from '../interfaces/subjectsInterface';
 
 
@@ -18,6 +19,7 @@ export class SubjectsComponent implements OnInit {
 
 
   constructor(private restService: RestService,
+    private stateService: StateService,
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -41,11 +43,19 @@ export class SubjectsComponent implements OnInit {
   }
 
   getSubjectsData() : void {
-    this.restService.getSubjectsData().pipe(
-      first()
-    ).subscribe((response: Subjects[]) => {
-      this.subjectsData = response;
-  })
+  //   this.restService.getSubjectsData().pipe(
+  //     first()
+  //   ).subscribe((response: Subjects[]) => {
+  //     this.subjectsData = response;
+  // })
+
+  this.stateService.getSubjectsData();
+  this.stateService.getSubjectsList().pipe(
+    skipWhile((item: Subjects[]) => !item),
+    first()
+  ).subscribe((response: Subjects[]) => {
+    this.subjectsData = response;
+  }); 
   }
 
   changed(name: string) {

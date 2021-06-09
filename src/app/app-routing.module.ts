@@ -13,7 +13,7 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'login', component: LoginComponent},
   {path: 'dashboard', component: DashboardComponent, children: [
-    
+    {path: '', outlet:'inside', component: MyProfileComponent},
     {path: 'studentslist', outlet:'inside', component: StudentsListComponent},
     {path: 'teachersList', outlet:'inside', component: TeachersListComponent},
     {path: 'myProfile', outlet:'inside', component: MyProfileComponent},

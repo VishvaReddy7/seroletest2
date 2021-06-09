@@ -15,6 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { NgxsModule } from '@ngxs/store';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -35,6 +37,7 @@ import { StudentEditComponent } from './student-edit/student-edit.component';
 import { TeacherEditComponent } from './teacher-edit/teacher-edit.component';
 import { AdminEditComponent } from './admin-edit/admin-edit.component';
 import { SubjectAddComponent } from './subject-add/subject-add.component';
+import { DataState } from './store/coursehub.state';
 
 
 
@@ -76,7 +79,9 @@ import { SubjectAddComponent } from './subject-add/subject-add.component';
     MatDialogModule,
     MatTableModule,
     MatIconModule,
-    MatSlideToggleModule   
+    MatSlideToggleModule,
+    NgxsModule.forFeature([DataState]),
+    NgxsModule.forRoot()   
     
 
   ],

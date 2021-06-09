@@ -9,11 +9,12 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RestService } from '../rest.service';
+import { StateService } from '../store/state.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SuccessfulpopdialogComponent } from '../successfulpopdialog/successfulpopdialog.component';
 import { Subjects } from '../interfaces/subjectsInterface';
 import { Students } from '../interfaces/studentsInterface';
-import { first } from 'rxjs/operators';
+import { first, skipWhile } from 'rxjs/operators';
 
 
 
@@ -30,21 +31,20 @@ export class StudentsignupComponent implements OnInit {
   subjectsData: Array<Subjects> = [];
   studentData: Array<Students> = [];
   details: Students | undefined;
-  // activeSubjects: any;
+  activeSubjects: Array<Subjects> = [];
 
   
 
   constructor(private formBuilder: FormBuilder,
      private router: Router,
-     private restService: RestService, 
+     private restService: RestService,
+     private stateService: StateService, 
      public  readonly dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.createStudentSignUpForm();
     this.getStudentsData();
     this.getSubjectsData();
-    // this.getActiveSubjects();
-    
+    this.createStudentSignUpForm();  
   }
   
   createStudentSignUpForm() : FormGroup {
@@ -170,13 +170,20 @@ export class StudentsignupComponent implements OnInit {
      this.restService.role = 'students';
      console.log(this.studentSignUpForm, "<=before reset");
      this.createStudentSignUpForm();
-     console.log(this.studentSignUpForm, "=<after reset");
-     this.restService.signUp(details).subscribe((response) => {
-       console.log("response=>",response);
-     },
-     (error) => {
+     console.log(this.studentSignUpForm, "<=after reset");
+    //  this.restService.signUp(details).subscribe((response) => {
+    //    console.log("response=>",response);
+    //  },
+    //  (error) => {
 
-     });
+    //  });
+    this.stateService.signUp(details);
+    this.stateService.getSignUpData().subscribe((response) => {
+      console.log("response=>", response);
+    },
+    (error) => {
+
+    })
   }
 
   fieldNameStatus(fieldName: string | number) {
@@ -220,7 +227,14 @@ export class StudentsignupComponent implements OnInit {
   }
 
   getStudentsData() : void {
-    this.restService.getStudentData().pipe(
+    // this.restService.getStudentData().pipe(
+    //   first()
+    // ).subscribe((response: Students[]) => {
+    //   this.studentData = response;
+    // });
+    this.stateService.getStudentData();
+    this.stateService.getStudentsList().pipe(
+      skipWhile((item: Students[]) => !item),
       first()
     ).subscribe((response: Students[]) => {
       this.studentData = response;
@@ -228,23 +242,19 @@ export class StudentsignupComponent implements OnInit {
   }
 
   getSubjectsData() : void {
-    this.restService.getSubjectsData().pipe(
+    this.stateService.getSubjectsData();
+    this.stateService.getSubjectsList().pipe(
+      skipWhile((item: Subjects[]) => !item),
       first()
     ).subscribe((response: Subjects[]) => {
-      this.subjectsData = response
-      console.log(response);
-      console.log("subjects",this.subjectsData);
+      this.subjectsData = response;
+      this.subjectsData.forEach((element: Subjects) => {
+        if(element.isActive) {
+          this.activeSubjects.push(element);
+        }
+        else {}
+      });
     });
   }
-  
-  // getActiveSubjects() {
-  //   console.log(this.subjectsData);
-  //   this.subjectsData.forEach((element: any) => {
-  //     if(element.activitystatus = "Active") {
-  //       this.activeSubjects.push(element);
-  //     }
-  //     else {}
-  //   });
-  // }
   
 }

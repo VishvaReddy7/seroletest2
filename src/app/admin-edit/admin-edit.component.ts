@@ -8,13 +8,20 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import { RestService } from '../rest.service';
+import { StateService } from '../store/state.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import { first, filter} from 'rxjs/operators';
+import { first, filter, skipWhile} from 'rxjs/operators';
 import { Admin } from '../interfaces/adminInterface';
 import { Students } from '../interfaces/studentsInterface';
 import { Teachers } from '../interfaces/teachersInterface';
+
+
+export interface EditDialogAdmin {
+  userDetails: Admin,
+  disableClose: boolean
+}
 
 
 @Component({
@@ -33,10 +40,11 @@ export class AdminEditComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private restService: RestService,
+    private stateService: StateService,
     private router: Router,
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<AdminEditComponent> ,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: EditDialogAdmin) { }
   
 
   ngOnInit(): void {
@@ -149,12 +157,13 @@ export class AdminEditComponent implements OnInit {
     };
     console.log(this.details.id);
     this.restService.editPersonRole = 'admin';
-    this.restService.save(this.details).subscribe((response: Admin | Students | Teachers) => {
-      console.log("response=>",response);
-    },
-    (error) => {
+    // this.restService.save(this.details).subscribe((response: Admin | Students | Teachers) => {
+    //   console.log("response=>",response);
+    // },
+    // (error) => {
 
-    });
+    // });
+    this.stateService.save(this.details);
   
      
   }
@@ -201,7 +210,15 @@ export class AdminEditComponent implements OnInit {
   }
 
   getAdminData() : void {
-    this.restService.getAdminData().pipe(
+    // this.restService.getAdminData().pipe(
+    //   first()
+    // ).subscribe((response: Admin[]) => {
+    //   this.adminData = response;
+    // });
+
+    this.stateService.getAdminData();
+    this.stateService.getAdminList().pipe(
+      skipWhile((item: Admin[]) => !item),
       first()
     ).subscribe((response: Admin[]) => {
       this.adminData = response;

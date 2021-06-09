@@ -4,9 +4,10 @@ import { Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RestService } from '../rest.service';
+import { StateService } from '../store/state.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SuccessfulpopdialogComponent } from '../successfulpopdialog/successfulpopdialog.component';
-import { first } from 'rxjs/operators';
+import { first, skipWhile } from 'rxjs/operators';
 import { Teachers } from '../interfaces/teachersInterface';
 import { Students } from '../interfaces/studentsInterface';
 import { Admin } from '../interfaces/adminInterface';
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
      private router: Router,
      private restService: RestService,
+     private stateService: StateService,
      public  readonly dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -158,7 +160,15 @@ export class LoginComponent implements OnInit {
     }
   }
   getStudentData() : void {
-    this.restService.getStudentData().pipe(
+    // this.restService.getStudentData().pipe(
+    //   first()
+    // ).subscribe((response: Students[]) => {
+    //   this.studentData = response;
+    // });
+
+    this.stateService.getStudentData();
+    this.stateService.getStudentsList().pipe(
+      skipWhile((item: Students[]) => !item),
       first()
     ).subscribe((response: Students[]) => {
       this.studentData = response;
@@ -166,7 +176,15 @@ export class LoginComponent implements OnInit {
   }
 
   getTeacherData() : void {
-    this.restService.getTeacherData().pipe(
+    // this.restService.getTeacherData().pipe(
+    //   first()
+    // ).subscribe((response: Teachers[]) => {
+    //   this.teacherData = response;
+    // });
+
+    this.stateService.getTeacherData();
+    this.stateService.getTeachersList().pipe(
+      skipWhile((item: Teachers[]) => !item),
       first()
     ).subscribe((response: Teachers[]) => {
       this.teacherData = response;
@@ -174,7 +192,15 @@ export class LoginComponent implements OnInit {
   }
 
   getAdminData() : void {
-    this.restService.getAdminData().pipe(
+    // this.restService.getAdminData().pipe(
+    //   first()
+    // ).subscribe((response: Admin[]) => {
+    //   this.adminData = response;
+    // });
+
+    this.stateService.getAdminData();
+    this.stateService.getAdminList().pipe(
+      skipWhile((item: Admin[]) => !item),
       first()
     ).subscribe((response: Admin[]) => {
       this.adminData = response;

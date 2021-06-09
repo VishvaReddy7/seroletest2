@@ -6,10 +6,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { SuccessfulpopdialogComponent } from './successfulpopdialog/successfulpopdialog.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { StudentEditComponent } from './student-edit/student-edit.component';
-import { Students } from './interfaces/studentsInterface';
 import { Subjects } from './interfaces/subjectsInterface';
 import { Admin } from './interfaces/adminInterface';
 import { Teachers } from './interfaces/teachersInterface';
+import { Students } from './interfaces/studentsInterface';
+import { Store } from '@ngxs/store';
+
 
 
 @Injectable({
@@ -30,7 +32,7 @@ export class RestService {
   
   
 
-  constructor(private httpClient: HttpClient, public readonly dialog: MatDialog) { }
+  constructor(private httpClient: HttpClient, public readonly dialog: MatDialog, private store: Store) { }
   
   getTeacherData() : Observable<Teachers[]> {
      return this.httpClient.get<Teachers[]>(`${environment.apiUrl}teachers`);
@@ -57,10 +59,11 @@ export class RestService {
     const options = {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     };
-    return this.httpClient.post<Students>(`${environment.apiUrl}${this.role}`, data, options);
+    return this.httpClient.post<Students | Teachers>(`${environment.apiUrl}${this.role}`, data, options);
   }
 
-  save(data: Students | Teachers | Admin) : Observable<Students> | Observable<Teachers> | Observable<Admin> {
+
+  save(data: Students | Teachers | Admin) : Observable<Students | Teachers | Admin> {
     const options = {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     };
@@ -108,8 +111,6 @@ export class RestService {
     console.log()
     return dialogRef.afterClosed();
     }
-  
-
 
     
 }

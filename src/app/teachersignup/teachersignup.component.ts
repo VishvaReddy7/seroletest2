@@ -11,9 +11,11 @@ import { Router } from '@angular/router';
 import { RestService } from '../rest.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SuccessfulpopdialogComponent } from '../successfulpopdialog/successfulpopdialog.component';
-import { first } from 'rxjs/operators';
+import { first, skipWhile } from 'rxjs/operators';
 import { Subjects } from '../interfaces/subjectsInterface';
 import { Teachers } from '../interfaces/teachersInterface';
+import { StateService } from '../store/state.service';
+import { Subject } from 'rxjs';
 
 
 
@@ -29,6 +31,7 @@ export class TeachersignupComponent implements OnInit {
   teacherSignUpForm!: FormGroup; 
   mailExists:boolean = false;
   subjectsData: Array<Subjects> | undefined;
+  activeSubjects!: Array<Subjects>;
   teacherData: Array<Teachers> = [];
   details: Teachers | undefined;
   userNameExists:boolean = false;
@@ -36,6 +39,7 @@ export class TeachersignupComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
      private router: Router,
      private restService: RestService,
+     private stateService: StateService,
      public  readonly dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -177,13 +181,15 @@ export class TeachersignupComponent implements OnInit {
     console.log(this.teacherSignUpForm.value);
     this.restService.role = 'teachers';
     this.teacherSignUpForm.reset();
-    this.restService.signUp(details).subscribe((response) => {
+    this.stateService.signUp(details);
+    this.stateService.getSignUpData().subscribe((response) => {
       console.log("response=>", response);
     },
     (error) => {
 
-    });
+    })
   }
+
 
 
   fieldNameStatus(fieldName: string | number) {
@@ -227,19 +233,42 @@ export class TeachersignupComponent implements OnInit {
   }
 
   getTeachersData() : void {
-    this.restService.getTeacherData().pipe(
+    // this.restService.getTeacherData().pipe(
+    //   first()
+    // ).subscribe((response :Teachers[]) => {
+    //   this.teacherData = response;
+    // });
+    this.stateService.getTeacherData();
+    this.stateService.getTeachersList().pipe(
+      skipWhile((item: Teachers[]) => !item),
       first()
-    ).subscribe((response :Teachers[]) => {
+    ).subscribe((response: Teachers[]) => {
       this.teacherData = response;
     });
   }
 
   getSubjectsData() : void {
-    this.restService.getSubjectsData().pipe(
+    // this.restService.getSubjectsData().pipe(
+    //   first()
+    // ).subscribe((response: Subjects[]) => {
+    //   this.subjectsData = response;
+    // });
+
+    this.stateService.getSubjectsData();
+    this.stateService.getSubjectsList().pipe(
+      skipWhile((item: Subjects[]) => !item),
       first()
     ).subscribe((response: Subjects[]) => {
       this.subjectsData = response;
+      this.subjectsData.forEach((element: Subjects) => {
+        if(element.isActive) {
+          this.activeSubjects.push(element);
+        }
+        else {}
+      });
     });
+
+
   }
 
 }

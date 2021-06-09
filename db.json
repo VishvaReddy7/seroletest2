@@ -315,6 +315,25 @@
       "activitystatus": "Active",
       "name": "Nikita Thawait",
       "id": 14
+    },
+    {
+      "firstName": "Anvesh Reddy",
+      "lastName": "Arimanda",
+      "fatherName": "Jeevan Daddy",
+      "dateOfBirth": "1996-06-19T14:00:00.000Z",
+      "subjects": [
+        "DBMS",
+        "Web Technologies"
+      ],
+      "phoneNumber": "8096323459",
+      "address": "Vijayawada",
+      "gender": "Male",
+      "email": "anvesh7@gmail.com",
+      "userName": "Anvesh7",
+      "password": "Anvesh7&",
+      "activitystatus": "Active",
+      "name": "Anvesh Reddy Arimanda",
+      "id": 15
     }
   ],
   "admin": [
@@ -361,8 +380,8 @@
     },
     {
       "name": "Data Analytics",
-      "activitystatus": "Active",
-      "isActive": true,
+      "activitystatus": "InActive",
+      "isActive": false,
       "id": 5
     },
     {
@@ -373,8 +392,8 @@
     },
     {
       "name": "Web Technologies",
-      "activitystatus": "InActive",
-      "isActive": false,
+      "activitystatus": "Active",
+      "isActive": true,
       "id": 7
     },
     {

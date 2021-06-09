@@ -39,7 +39,7 @@
               <mat-form-field appearance="fill">
                   <mat-label>Subjects</mat-label>
                   <mat-select formControlName="subjects" multiple>
-                    <mat-option *ngFor="let subject of subjectsData" [value]="subject.name">{{subject.name}}</mat-option>
+                    <mat-option *ngFor="let subject of activeSubjects" [value]="subject.name">{{subject.name}}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <div id="emailHelp" class="form-text text-danger" *ngIf="fieldNameStatus('subjects')">Subject(s) is Mandotory</div>
